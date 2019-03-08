@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "890414902949",
+    "firebase_url": "https://kostku-d9d46.firebaseio.com",
+    "project_id": "kostku-d9d46",
+    "storage_bucket": "kostku-d9d46.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890414902949:android:5a468c4b26e2d7e8",
+        "android_client_info": {
+          "package_name": "com.allan.kostku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "890414902949-7hf9kjv3831hksggeoklhj291h2bla7f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.allan.kostku",
+            "certificate_hash": "c85a6ed05f0f550b1e2aa687b374ef5bda97b9fe"
+          }
+        },
+        {
+          "client_id": "890414902949-59i61slrc7bkf0tlvmg632grq4k7qehs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQjn-o2r4zGyJXAc-YWbahZRFz0Lt9Pdg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "890414902949-59i61slrc7bkf0tlvmg632grq4k7qehs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

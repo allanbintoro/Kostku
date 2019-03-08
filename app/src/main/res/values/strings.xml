@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">KostKu</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_payment">Payment</string>
+
+    <string name="home">Home</string>
+    <string name="history">History Payment</string>
+    <string name="payment">Payment</string>
+    <string name="report">Report</string>
+    <string name="account">Account</string>
+    //Tab Fragment name
+    <string name="tab_label1">Pemasukan</string>
+    <string name="list_pemasukan">List Pemasukan: </string>
+    <string name="tab_label2">Pengeluaran</string>
+    <string name="list_pengeluaran">List Pengeluaran: </string>
+    <string name="log_out">Log Out</string>
+</resources>
