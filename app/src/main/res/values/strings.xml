@@ -16,4 +16,8 @@
     <string name="tab_label2">Pengeluaran</string>
     <string name="list_pengeluaran">List Pengeluaran: </string>
     <string name="log_out">Log Out</string>
+    <string name="lapor_jika_anda_memiliki_keluhan">Lapor Jika anda memiliki keluhan</string>
+    <string name="judul_keluhan_ex_atap_bocor">Judul Keluhan *Ex(Atap Bocor)</string>
+    <string name="keluhan_anda">Keluhan Anda</string>
+    <string name="lapor">LAPOR</string>
 </resources>

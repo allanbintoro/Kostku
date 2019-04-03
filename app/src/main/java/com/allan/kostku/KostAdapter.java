@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.allan.kostku.model.Kost;
+
 import java.util.ArrayList;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;

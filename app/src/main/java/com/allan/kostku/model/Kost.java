@@ -1,4 +1,4 @@
-package com.allan.kostku;
+package com.allan.kostku.model;
 
 import java.io.Serializable;
 

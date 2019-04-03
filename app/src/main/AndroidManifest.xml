@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DataKost"></activity>
+        <activity android:name=".ListReport"></activity>
+        <activity android:name=".ReportDialog" />
+        <activity android:name=".DataKost" />
         <activity android:name=".ActivityTwo" />
         <activity android:name=".ActivityOne" />
         <activity android:name=".LoginActivity" />

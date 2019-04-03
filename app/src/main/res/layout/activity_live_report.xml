@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReportDialog">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <TextView
+        android:id="@+id/tv_informasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="1dp"
+        android:text="@string/lapor_jika_anda_memiliki_keluhan" />
+
+    <EditText
+        android:id="@+id/et_Judul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_informasi"
+        android:layout_marginTop="8dp"
+        android:hint="@string/judul_keluhan_ex_atap_bocor"
+        android:inputType="" />
+
+    <EditText
+        android:id="@+id/et_Deksripsi"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="74dp"
+        android:ems="10"
+        android:hint="@string/keluhan_anda"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btn_Lapor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_Deksripsi"
+        android:layout_marginTop="31dp"
+        android:text="@string/lapor" />
+
+
+
+
+</RelativeLayout>

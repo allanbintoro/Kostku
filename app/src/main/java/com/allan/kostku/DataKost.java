@@ -1,13 +1,12 @@
 package com.allan.kostku;
 
 import android.content.Intent;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.braintreepayments.cardform.view.CardEditText;
+import com.allan.kostku.model.Kost;
 
 public class DataKost extends AppCompatActivity {
     private EditText nama_kost;
@@ -28,6 +27,5 @@ public class DataKost extends AppCompatActivity {
         nama_kost.setText(kost.getNama());
         umur_kost.setText(kost.getUmur());
         fasilitas_kost.setText(kost.getFasilitas());
-
     }
 }

@@ -1,13 +1,9 @@
 package com.allan.kostku;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,15 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.allan.kostku.model.Kost;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
@@ -96,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
-
-
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav);
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(0);
@@ -122,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         break;
                     case R.id.report_menu:
+                        Intent c = new Intent(MainActivity.this, ListReport.class);
+                        c.setFlags(FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(c);
+                        overridePendingTransition(0, 0);
                         break;
                     case R.id.account_menu:
                         break;

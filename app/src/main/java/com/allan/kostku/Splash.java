@@ -13,10 +13,8 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //menghilangkan ActionBar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
-
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -25,6 +23,6 @@ public class Splash extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
-        }, 2000L);
+        }, 1000L);
     }
 }
