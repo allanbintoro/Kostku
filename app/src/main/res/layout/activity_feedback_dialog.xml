@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReportDialog">
-
+    tools:context=".FeedbackDialog">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -17,32 +16,32 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <Spinner
-        android:id="@+id/spinnerReportTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="49dp"
-        android:entries="@array/reportTitle"
-        android:inputType="" />
 
     <EditText
-        android:id="@+id/et_desc"
+        android:id="@+id/et_feedbackDesc"
         android:layout_width="match_parent"
         android:layout_height="309dp"
-        android:layout_below="@+id/spinnerReportTitle"
+        android:layout_below="@+id/toolbar"
         android:layout_marginTop="-7dp"
         android:ems="10"
-        android:hint="@string/keluhan_anda"
+        android:hint="Apa yang perlu ditingkatkan?"
         android:inputType="textMultiLine" />
-
-    <Button
-        android:id="@+id/btn_Lapor"
+    <SeekBar
+        android:max="5"
+        android:id="@+id/seekbarFeedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_desc"
+        android:layout_below="@+id/et_feedbackDesc"
+        android:layout_marginTop="49dp"
+        android:inputType="" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_feedbackDesc"
         android:layout_marginTop="86dp"
-        android:text="@string/lapor" />
+        android:text="@string/submit" />
 
 
 </RelativeLayout>

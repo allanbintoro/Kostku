@@ -20,4 +20,12 @@
     <string name="judul_keluhan_ex_atap_bocor">Judul Keluhan *Ex(Atap Bocor)</string>
     <string name="keluhan_anda">Keluhan Anda</string>
     <string name="lapor">LAPOR</string>
+    <string name="submit">submit</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="feedback">Feedback</string>
+    <array name="reportTitle">
+        <item>Ribut</item>
+        <item>Kerusakan</item>
+        <item>ETC</item>
+    </array>
 </resources>

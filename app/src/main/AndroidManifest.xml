@@ -7,17 +7,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_kost"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_kost_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListReport"></activity>
+        <activity android:name=".UserProfile"></activity>
+        <activity android:name=".FeedbackDialog" />
+        <activity android:name=".ChangePassword" />
+        <activity android:name=".Me" />
+        <activity android:name=".ListReport" />
         <activity android:name=".ReportDialog" />
         <activity android:name=".DataKost" />
-        <activity android:name=".ActivityTwo" />
-        <activity android:name=".ActivityOne" />
+        <activity android:name=".Payment" />
+        <activity android:name=".HistoryPayment" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity

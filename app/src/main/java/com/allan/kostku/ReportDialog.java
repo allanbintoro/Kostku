@@ -1,70 +1,63 @@
 package com.allan.kostku;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.allan.kostku.model.Report;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ReportDialog extends AppCompatActivity {
     private DatabaseReference database;
+    FirebaseAuth firebaseAuth;
 
-    private EditText etJudul, etDeskripsi;
-
+    private Spinner spinnerReportTitle;
+    private EditText et_desc;
+    private Button btn_Lapor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_report);
+        setTitle("Report Dialog");
 
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        database = FirebaseDatabase.getInstance().getReference("Report");
 
-        database = FirebaseDatabase.getInstance().getReference();
-        etJudul = findViewById(R.id.et_Judul);
-        etDeskripsi = findViewById(R.id.et_Deksripsi);
+        spinnerReportTitle = findViewById(R.id.spinnerReportTitle);
+        et_desc = findViewById(R.id.et_desc);
+        btn_Lapor = findViewById(R.id.btn_Lapor);
 
-        findViewById(R.id.btn_Lapor).setOnClickListener(new View.OnClickListener() {
+        btn_Lapor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sJudul = etJudul.getText().toString();
-                String sDesk = etDeskripsi.getText().toString();
-                if(sJudul.equals("")){
-                    etJudul.setError("Silahkan masukkan Judul");
-                    etJudul.requestFocus();
-                }else if(sDesk.equals("")){
-                    etDeskripsi.setError("Silahkan masukkan keluhan");
-                    etDeskripsi.requestFocus();
-                }else{
-                    submitReport(new Report(sJudul.toLowerCase(), sDesk.toLowerCase()));
-
-                }
-            }
-        });
-
-
-
-    }
-
-    private void submitReport(Report report) {
-        database.child("Report")
-                .push()
-                .setValue(report)
-                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                etJudul.setText("");
-                etDeskripsi.setText("");
-
-                Toast.makeText(ReportDialog.this, "Report telah di submit", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ReportDialog.this,ListReport.class));
-
+                addReport();
             }
         });
     }
+
+    private void addReport(){
+        String reportTitle = spinnerReportTitle.getSelectedItem().toString();
+        String reportDesc = et_desc.getText().toString();
+        if(reportDesc.equals("")){
+            et_desc.setError("Silahkan masukkan keluhan");
+            et_desc.requestFocus();
+        }else{
+            String id = database.push().getKey();
+            String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            Report report = new Report(id, reportTitle, reportDesc, user);
+            database.child(id).setValue(report);
+            Toast.makeText(this, "Report Submitted", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ReportDialog.this,ListReport.class));
+        }
+    }
+
 }

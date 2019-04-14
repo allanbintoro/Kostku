@@ -2,13 +2,13 @@ package com.allan.kostku;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.main_menu_logout:
-                keluar();
+                logout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void keluar() {
+    public void logout() {
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
         alertDialog.setTitle("Logout Apps");
         alertDialog.setMessage("Are You Sure?");
@@ -73,22 +73,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // ... Code inside onCreate() method
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Recycle View
         addData();
 
+
         recyclerView = (RecyclerView) findViewById(R.id.list_kost);
-
         adapter = new KostAdapter(kostArrayList, MainActivity.this);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-
         recyclerView.setLayoutManager(layoutManager);
-
         recyclerView.setAdapter(adapter);
 
+        navBar();
+    }
+
+    public void navBar(){
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav);
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(0);
@@ -100,13 +101,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.home_menu:
                         break;
                     case R.id.history_menu:
-                        Intent a = new Intent(MainActivity.this, ActivityOne.class);
+                        Intent a = new Intent(MainActivity.this, HistoryPayment.class);
                         a.setFlags(FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(a);
                         overridePendingTransition(0, 0);
                         break;
                     case R.id.payment_menu:
-                        Intent b = new Intent(MainActivity.this, ActivityTwo.class);
+                        Intent b = new Intent(MainActivity.this, Payment.class);
                         b.setFlags(FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(b);
                         overridePendingTransition(0, 0);
@@ -118,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         break;
                     case R.id.account_menu:
+                        Intent d = new Intent(MainActivity.this, Me.class);
+                        d.setFlags(FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(d);
+                        overridePendingTransition(0, 0);
                         break;
                 }
                 return false;

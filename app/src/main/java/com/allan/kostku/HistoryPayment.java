@@ -1,26 +1,27 @@
 package com.allan.kostku;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
-public class ActivityOne extends AppCompatActivity {
+public class HistoryPayment extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_one);
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setTitle("History Payment");
+
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Create an instance of the tab layout from the view.
@@ -36,6 +37,8 @@ public class ActivityOne extends AppCompatActivity {
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
+
+
         // Setting a listener for clicks.
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -53,6 +56,10 @@ public class ActivityOne extends AppCompatActivity {
             }
         });
 
+        navBar();
+    }
+
+    public void navBar(){
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav);
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(1);
@@ -62,7 +69,7 @@ public class ActivityOne extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home_menu:
-                        Intent a = new Intent(ActivityOne.this, MainActivity.class);
+                        Intent a = new Intent(HistoryPayment.this, MainActivity.class);
                         a.setFlags(FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(a);
                         overridePendingTransition(0, 0);
@@ -70,19 +77,27 @@ public class ActivityOne extends AppCompatActivity {
                     case R.id.history_menu:
                         break;
                     case R.id.payment_menu:
-                        Intent b = new Intent(ActivityOne.this, ActivityTwo.class);
+                        Intent b = new Intent(HistoryPayment.this, Payment.class);
                         b.setFlags(FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(b);
                         overridePendingTransition(0, 0);
                         break;
                     case R.id.report_menu:
+                        Intent c = new Intent(HistoryPayment.this, ListReport.class);
+                        c.setFlags(FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(c);
+                        overridePendingTransition(0, 0);
                         break;
                     case R.id.account_menu:
+                        Intent d = new Intent(HistoryPayment.this, Me.class);
+                        d.setFlags(FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(d);
+                        overridePendingTransition(0, 0);
                         break;
                 }
                 return false;
             }
         });
-
     }
+
 }

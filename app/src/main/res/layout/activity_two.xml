@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityTwo">
+    android:orientation="vertical"
+    tools:context=".Payment">
 
-
-    <TextView
-        android:id="@+id/activityTitle2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:textAlignment="center"
-        android:textSize="30sp" />
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,8 +17,18 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+    <com.midtrans.sdk.uikit.widgets.FancyButton
+        android:id="@+id/button_primary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:fb_defaultColor="@color/gray.primary"
+        app:fb_focusColor="@color/colorAccentLight"
+        app:fb_radius="@dimen/two_dp"
+        app:fb_text="@string/pay_now"
+        app:fb_textGravity="center_vertical"
+        app:fb_textSize="@dimen/button_primary_text_size"/>
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,4 +38,4 @@
         app:itemTextColor="@drawable/state_bnve"
         app:menu="@menu/bottomnavigation_menu" />
 
-</RelativeLayout>
+</LinearLayout>

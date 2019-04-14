@@ -1,8 +1,8 @@
 package com.allan.kostku;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.allan.kostku.fragments.TabFragment1;
 import com.allan.kostku.fragments.TabFragment2;
