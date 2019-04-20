@@ -18,11 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
+    // defining views
     private EditText mEmail,mPassword;
     private Button mLogin;
-
+    // firebase auth object
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +43,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        // initialize view
         mEmail = (EditText)findViewById(R.id.email);
         mPassword = (EditText)findViewById(R.id.password);
         mLogin = (Button)findViewById(R.id.login);
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
+            // method for user login
             public void onClick(View v) {
                 final String email = mEmail.getText().toString().trim();
                 final String password = mPassword.getText().toString().trim();
