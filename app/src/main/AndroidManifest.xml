@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_kost_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserProfile"></activity>
+        <activity android:name=".ReportData"></activity>
+        <activity android:name=".UserProfile" />
         <activity android:name=".FeedbackDialog" />
         <activity android:name=".ChangePassword" />
         <activity android:name=".Me" />

@@ -5,14 +5,18 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.allan.kostku.DataKost;
 import com.allan.kostku.R;
+import com.allan.kostku.ReportData;
 import com.allan.kostku.model.Report;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,17 +24,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHolder> {
-    private ArrayList<Report> list;
-    private Context context;
-    private AdapterView.OnItemClickListener listener;
-    FirebaseAuth firebaseAuth;
-    FirebaseDatabase firebaseDatabase;
+    ArrayList<Report> list;
+    Context context;
 
-    public ReportAdapter(Context context, ArrayList<Report> list) {
-        this.context = context;
+
+    public ReportAdapter(ArrayList<Report> list,Context context) {
         this.list = list;
+        this.context = context;
     }
 
     @NonNull
@@ -45,12 +49,23 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 //    }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
+        final Report report = list.get(i);
         myViewHolder.tv_judul.setText(list.get(i).getReportTitle());
         myViewHolder.tv_deskripsi.setText("Deskripsi:"+list.get(i).getReportDesc());
         myViewHolder.tv_nama.setText("Nama Pelapor: "+list.get(i).getUser());
         myViewHolder.tv_date.setText("Tanggal Laporan:"+DateFormat.getDateTimeInstance().format(list.get(i).getTimestampCreatedLong()));
 //        myViewHolder.tv_date.setText(DateFormat.getDateInstance(DateFormat.DEFAULT).format(list.get(i).getTimestampCreatedLong()));
+        myViewHolder.listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "test"+ i, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ReportData.class);
+                intent.putExtra("report_data",report);
+                intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                context.startActivity(intent);
+            }
+        });
     }
 
 
@@ -63,9 +78,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView tv_judul,tv_deskripsi, tv_nama, tv_date;
-        private LinearLayout listItem;
+        public LinearLayout listItem;
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
             tv_judul = itemView.findViewById(R.id.list_title);
@@ -75,4 +90,5 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
             listItem = itemView.findViewById(R.id.list_root);
         }
     }
+
 }

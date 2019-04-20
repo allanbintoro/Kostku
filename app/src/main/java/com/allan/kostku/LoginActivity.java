@@ -1,8 +1,10 @@
 package com.allan.kostku;
 
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText mEmail,mPassword;
+    private EditText mEmail, mPassword;
     private Button mLogin;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if(user!=null){
+                if (user != null) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -41,43 +44,52 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        mEmail = (EditText)findViewById(R.id.email);
-        mPassword = (EditText)findViewById(R.id.password);
-        mLogin = (Button)findViewById(R.id.login);
+        mEmail = (EditText) findViewById(R.id.email);
+        mPassword = (EditText) findViewById(R.id.password);
+        mLogin = (Button) findViewById(R.id.login);
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String email = mEmail.getText().toString().trim();
                 final String password = mPassword.getText().toString().trim();
-                if(email.equals("allan@gmail.com")){
-                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                if (email.equals("allan@gmail.com")) {
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(LoginActivity.this,"Sign In Error", Toast.LENGTH_SHORT).show();
-                            }else{
+                            if (task.isSuccessful()) {
                                 DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("admin");
                                 current_user_db.setValue(true);
                                 Toast.makeText(LoginActivity.this, "ADMIN", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginActivity.this,ListReport.class));
+                                startActivity(new Intent(LoginActivity.this, ListReport.class));
+                            } else {
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
 
-                }else{
-                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(LoginActivity.this,"Sign In Error", Toast.LENGTH_SHORT).show();
-                            }else{
-                                String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("User").child(user_id);
-                                current_user_db.setValue(true);
+                } else {
+                    if (!password.isEmpty() && !email.isEmpty()) {
+                        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    String user_id = mAuth.getCurrentUser().getUid();
+                                    DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("User").child(user_id);
+                                    current_user_db.setValue(true);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             }
+                        });
+                    }else{
+                        if (password.isEmpty()){
+                            Toast.makeText(LoginActivity.this, "Please Insert Password", Toast.LENGTH_SHORT).show();
                         }
-                    });
+                        else{
+                            Toast.makeText(LoginActivity.this, "Please Insert Email", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
         });

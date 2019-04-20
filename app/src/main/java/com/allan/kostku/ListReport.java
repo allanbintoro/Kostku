@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
@@ -33,7 +35,7 @@ public class ListReport extends AppCompatActivity {
     private static final String TAG = "ListReport";
     RecyclerView recyclerView;
     DatabaseReference reportRef;
-    ArrayList<Report> list;
+    ArrayList<Report> reportList;
     private FloatingActionButton fab_add;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
@@ -109,18 +111,18 @@ public class ListReport extends AppCompatActivity {
     }
 
     private void loadUser() {
-        String a = firebaseAuth.getCurrentUser().getEmail();
+        final String a = firebaseAuth.getCurrentUser().getEmail();
         Query query = reportRef.orderByChild("user").equalTo(a);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    list = new ArrayList<>();
-                    list.clear();
+                    reportList = new ArrayList<>();
+                    reportList.clear();
                     for (DataSnapshot i : dataSnapshot.getChildren()) {
-                        list.add(i.getValue(Report.class));
+                        reportList.add(i.getValue(Report.class));
                     }
-                    ReportAdapter reportAdapter = new ReportAdapter(context, list);
+                    ReportAdapter reportAdapter = new ReportAdapter(reportList, ListReport.this);
 //                    AdapterReport adapterReport = new AdapterReport(list, context);
                     recyclerView.setAdapter(reportAdapter);
                 }
@@ -137,12 +139,12 @@ public class ListReport extends AppCompatActivity {
         reportRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list = new ArrayList<>();
-                list.clear();
+                reportList = new ArrayList<>();
+                reportList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    list.add(ds.getValue(Report.class));
+                    reportList.add(ds.getValue(Report.class));
                 }
-                ReportAdapter reportAdapter = new ReportAdapter(context,list);
+                ReportAdapter reportAdapter = new ReportAdapter(reportList, ListReport.this);
                 recyclerView.setAdapter(reportAdapter);
             }
 
@@ -159,6 +161,5 @@ public class ListReport extends AppCompatActivity {
 //        loadUserInformation();
         loadUser();
     }
-
 
 }
