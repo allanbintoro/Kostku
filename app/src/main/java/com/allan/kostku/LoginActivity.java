@@ -20,21 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
-<<<<<<< HEAD
     private EditText mEmail, mPassword;
-=======
     // defining views
-    private EditText mEmail,mPassword;
->>>>>>> f4ab0592f1eae7f2d72ddef9b52e61e723f10664
     private Button mLogin;
     // firebase auth object
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> f4ab0592f1eae7f2d72ddef9b52e61e723f10664
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,16 +45,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-<<<<<<< HEAD
-        mEmail = (EditText) findViewById(R.id.email);
-        mPassword = (EditText) findViewById(R.id.password);
-        mLogin = (Button) findViewById(R.id.login);
-=======
+
         // initialize view
         mEmail = (EditText)findViewById(R.id.email);
         mPassword = (EditText)findViewById(R.id.password);
         mLogin = (Button)findViewById(R.id.login);
->>>>>>> f4ab0592f1eae7f2d72ddef9b52e61e723f10664
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
