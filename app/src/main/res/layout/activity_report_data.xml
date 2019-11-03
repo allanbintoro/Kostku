@@ -16,11 +16,11 @@
 
     <TextView
         android:id="@+id/reportTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="353dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginEnd="272dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="-21dp"
         android:layout_toEndOf="@+id/tv_Judul"
         android:paddingLeft="16dp"
         android:text="TextView"
@@ -36,7 +36,7 @@
 
     <TextView
         android:id="@+id/reportDesc"
-        android:layout_width="wrap_content"
+        android:layout_width="328dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/reportTitle"
         android:layout_marginStart="18dp"

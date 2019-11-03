@@ -1,4 +1,4 @@
-package com.allan.kostku.model;
+package com.allan.kostku.Model;
 
 public class Feedback {
     private String feedbackId,feedbackDesc,user, feedbackRating;

@@ -1,8 +1,10 @@
 package com.allan.kostku;
 
-import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,14 +12,18 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allan.kostku.adapter.ReportAdapter;
-import com.allan.kostku.model.Report;
+import com.allan.kostku.Adapter.ReportAdapter;
+import com.allan.kostku.Model.Report;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
@@ -39,7 +45,7 @@ public class ListReport extends AppCompatActivity {
     private FloatingActionButton fab_add;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
-    Context context;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,7 @@ public class ListReport extends AppCompatActivity {
         setContentView(R.layout.activity_list_report);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        progressBar = new ProgressBar(this);
 
         setTitle("Report");
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -123,7 +130,6 @@ public class ListReport extends AppCompatActivity {
                         reportList.add(i.getValue(Report.class));
                     }
                     ReportAdapter reportAdapter = new ReportAdapter(reportList, ListReport.this);
-//                    AdapterReport adapterReport = new AdapterReport(list, context);
                     recyclerView.setAdapter(reportAdapter);
                 }
             }
@@ -160,6 +166,45 @@ public class ListReport extends AppCompatActivity {
         super.onStart();
 //        loadUserInformation();
         loadUser();
+        //loadFirebase();
     }
 
+    private void loadFirebase() {
+        FirebaseRecyclerOptions<Report> options = new FirebaseRecyclerOptions.Builder<Report>()
+                .setQuery(reportRef, Report.class)
+                .build();
+        FirebaseRecyclerAdapter<Report, FindReportViewHolder> adapter = new FirebaseRecyclerAdapter<Report, FindReportViewHolder>(
+                options
+        ) {
+            @Override
+            protected void onBindViewHolder(@NonNull FindReportViewHolder findReportViewHolder, final int i, @NonNull Report report) {
+                findReportViewHolder.tv_judul.setText(report.getReportTitle());
+                findReportViewHolder.tv_deskripsi.setText("Deskripsi:"+report.getReportDesc());
+                findReportViewHolder.tv_nama.setText("Nama Pelapor: "+report.getUser());
+                findReportViewHolder.tv_date.setText("Tanggal Laporan:"+ DateFormat.getDateTimeInstance().format(report.getTimestampCreated()));
+            }
+
+            @NonNull
+            @Override
+            public FindReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_report, parent, false);
+                FindReportViewHolder viewHolder = new FindReportViewHolder(view);
+                return viewHolder;
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+    public static class FindReportViewHolder extends RecyclerView.ViewHolder{
+        TextView tv_judul,tv_deskripsi, tv_nama, tv_date;
+        public LinearLayout listItem;
+        public FindReportViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv_judul = itemView.findViewById(R.id.list_title);
+            tv_deskripsi = itemView.findViewById(R.id.list_desk);
+            tv_nama = itemView.findViewById(R.id.list_name);
+            tv_date = itemView.findViewById(R.id.list_time);
+            listItem = itemView.findViewById(R.id.list_root);
+        }
+    }
 }

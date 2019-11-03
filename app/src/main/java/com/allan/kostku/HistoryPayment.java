@@ -24,6 +24,11 @@ public class HistoryPayment extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        tabLayout();
+        navBar();
+    }
+
+    private void tabLayout() {
         // Create an instance of the tab layout from the view.
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         // Set the text for each tab.
@@ -55,8 +60,6 @@ public class HistoryPayment extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
-        navBar();
     }
 
     public void navBar(){

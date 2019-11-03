@@ -1,12 +1,14 @@
 package com.allan.kostku;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.allan.kostku.model.Report;
+import com.allan.kostku.Model.Report;
 
 public class ReportData extends AppCompatActivity {
     private Report report;
@@ -25,4 +27,6 @@ public class ReportData extends AppCompatActivity {
         reportTitle.setText(report.getReportTitle());
         reportDesc.setText(report.getReportDesc());
     }
+
+
 }

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.allan.kostku.model.Kost;
+import com.allan.kostku.Model.Kost;
 
 public class DataKost extends AppCompatActivity {
     private EditText nama_kost;

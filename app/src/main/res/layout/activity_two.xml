@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,17 +17,6 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <com.midtrans.sdk.uikit.widgets.FancyButton
-        android:id="@+id/button_primary"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:fb_defaultColor="@color/gray.primary"
-        app:fb_focusColor="@color/colorAccentLight"
-        app:fb_radius="@dimen/two_dp"
-        app:fb_text="@string/pay_now"
-        app:fb_textGravity="center_vertical"
-        app:fb_textSize="@dimen/button_primary_text_size"/>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav"
         android:layout_width="match_parent"
@@ -38,4 +27,18 @@
         app:itemTextColor="@drawable/state_bnve"
         app:menu="@menu/bottomnavigation_menu" />
 
-</LinearLayout>
+    <com.midtrans.sdk.uikit.widgets.FancyButton
+        android:id="@+id/button_primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="441dp"
+        android:visibility="visible"
+        app:fb_defaultColor="@color/gray.primary"
+        app:fb_focusColor="@color/colorAccentLight"
+        app:fb_radius="@dimen/two_dp"
+        app:fb_text="@string/pay_now"
+        app:fb_textGravity="center_vertical"
+        app:fb_textSize="@dimen/button_primary_text_size" />
+
+</RelativeLayout>

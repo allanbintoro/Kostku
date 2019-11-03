@@ -1,4 +1,4 @@
-package com.allan.kostku.adapter;
+package com.allan.kostku.Adapter;
 
 import android.content.Context;
 
@@ -9,17 +9,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allan.kostku.DataKost;
 import com.allan.kostku.R;
 import com.allan.kostku.ReportData;
-import com.allan.kostku.model.Report;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+import com.allan.kostku.Model.Report;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -28,9 +24,9 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHolder> {
+
     ArrayList<Report> list;
     Context context;
-
 
     public ReportAdapter(ArrayList<Report> list,Context context) {
         this.list = list;

@@ -1,4 +1,4 @@
-package com.allan.kostku.model;
+package com.allan.kostku.Model;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;

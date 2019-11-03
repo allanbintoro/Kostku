@@ -1,4 +1,4 @@
-package com.allan.kostku.fragments;
+package com.allan.kostku.Fragment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;

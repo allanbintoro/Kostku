@@ -14,7 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.allan.kostku.model.Kost;
+import com.allan.kostku.Model.Kost;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
