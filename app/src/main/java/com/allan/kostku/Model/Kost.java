@@ -3,40 +3,77 @@ package com.allan.kostku.Model;
 import java.io.Serializable;
 
 public class Kost implements Serializable {
-    private String nama;
-    private String umur;
-    private String fasilitas;
+    private String kostId, kostLocation, kostName, kostDesc, kostType, kostOwnerId;
 
     public Kost() {
     }
 
-    public Kost(String nama, String umur, String fasilitas) {
-        this.nama = nama;
-        this.umur = umur;
-        this.fasilitas = fasilitas;
+    public Kost(String kostId, String kostLocation, String kostName, String kostDesc, String kostType, String kostOwnerId) {
+        this.kostId = kostId;
+        this.kostLocation = kostLocation;
+        this.kostName = kostName;
+        this.kostDesc = kostDesc;
+        this.kostType = kostType;
+        this.kostOwnerId = kostOwnerId;
     }
 
-    public String getNama() {
-        return nama;
+    public String getKostId() {
+        return kostId;
     }
 
-    public String getUmur() {
-        return umur;
+    public void setKostId(String kostId) {
+        this.kostId = kostId;
     }
 
-    public String getFasilitas() {
-        return fasilitas;
+    public String getKostLocation() {
+        return kostLocation;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setKostLocation(String kostLocation) {
+        this.kostLocation = kostLocation;
     }
 
-    public void setUmur(String umur) {
-        this.umur = umur;
+    public String getKostName() {
+        return kostName;
     }
 
-    public void setFasilitas(String fasilitas) {
-        this.fasilitas = fasilitas;
+    public void setKostName(String kostName) {
+        this.kostName = kostName;
+    }
+
+    public String getKostDesc() {
+        return kostDesc;
+    }
+
+    public void setKostDesc(String kostDesc) {
+        this.kostDesc = kostDesc;
+    }
+
+    public String getKostType() {
+        return kostType;
+    }
+
+    public void setKostType(String kostType) {
+        this.kostType = kostType;
+    }
+
+    public String getKostOwnerId() {
+        return kostOwnerId;
+    }
+
+    public void setKostOwnerId(String kostOwnerId) {
+        this.kostOwnerId = kostOwnerId;
+    }
+
+    @Override
+    public String toString() {
+        return "Kost{" +
+                "kostId='" + kostId + '\'' +
+                ", kostLocation='" + kostLocation + '\'' +
+                ", kostName='" + kostName + '\'' +
+                ", kostDesc='" + kostDesc + '\'' +
+                ", kostType='" + kostType + '\'' +
+                ", kostOwnerId='" + kostOwnerId + '\'' +
+                '}';
     }
 }

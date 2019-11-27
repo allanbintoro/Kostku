@@ -1,20 +1,18 @@
 package com.allan.kostku.Model;
 
-public class Feedback {
-    private String feedbackId,feedbackDesc,user, feedbackRating;
-//    private int feedbackRating;
+import java.io.Serializable;
+
+public class Feedback implements Serializable {
+    private String feedbackId, feedbackDesc, feedbackScore;
+    private User user;
 
     public Feedback() {
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public Feedback(String feedbackId, String feedbackDesc, String feedbackRating, String user) {
+    public Feedback(String feedbackId, String feedbackDesc, String feedbackScore, User user) {
         this.feedbackId = feedbackId;
         this.feedbackDesc = feedbackDesc;
-        this.feedbackRating = feedbackRating;
+        this.feedbackScore = feedbackScore;
         this.user = user;
     }
 
@@ -22,11 +20,31 @@ public class Feedback {
         return feedbackId;
     }
 
+    public void setFeedbackId(String feedbackId) {
+        this.feedbackId = feedbackId;
+    }
+
     public String getFeedbackDesc() {
         return feedbackDesc;
     }
 
-    public String getFeedbackRating() {
-        return feedbackRating;
+    public void setFeedbackDesc(String feedbackDesc) {
+        this.feedbackDesc = feedbackDesc;
+    }
+
+    public String getFeedbackScore() {
+        return feedbackScore;
+    }
+
+    public void setFeedbackScore(String feedbackScore) {
+        this.feedbackScore = feedbackScore;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

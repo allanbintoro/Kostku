@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/lyt_parent"
+    android:id="@+id/cvReportItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
@@ -24,18 +24,18 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txt_name"
+                android:id="@+id/tvReportTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Fergiyaniko Dwi Ciputra a as das ds das das as das daa"
+                android:text="Allan"
                 android:textColor="@color/grey_800"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/txt_date"
+                android:id="@+id/tvReportDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -46,82 +46,12 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txt_address"
+            android:id="@+id/tvReport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_weight="10"
-            android:text="Jl. Tukad Languan no. 20"
-            android:textColor="@color/grey_600"
-            android:textSize="12sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_weight="10"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/im_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/ic_delivery_truck" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="0"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txt_task_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="0"
-                        android:background="@drawable/bg_rounded_corner_blue"
-                        android:text="Pick Up From Client"
-                        android:textColor="#fff"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/txt_service_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/bg_rounded_corner_red"
-                        android:gravity="end"
-                        android:text="Express"
-                        android:textColor="#fff"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/txt_items"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Rp 12.000 5 Items, 10.4 Kg"
-                    android:textColor="@color/grey_600"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+            android:text="BoardingTenant" />
 
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

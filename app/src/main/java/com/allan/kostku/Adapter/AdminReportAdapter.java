@@ -4,14 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.allan.kostku.Model.Report;
 import com.allan.kostku.R;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,22 +37,21 @@ public class AdminReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
-        public TextView name;
-        public View lyt_parent;
+        public CardView cvReportItem;
+        public TextView tvReportTitle, tvReportDate;
 
         public OriginalViewHolder(View v) {
             super(v);
-            image = (ImageView) v.findViewById(R.id.image);
-            name = (TextView) v.findViewById(R.id.reportTitle);
-            lyt_parent = (View) v.findViewById(R.id.reportDesc);
+            cvReportItem = (CardView) v.findViewById(R.id.cvReportItem);
+            tvReportTitle = (TextView) v.findViewById(R.id.tvReportTitle);
+            tvReportDate = (TextView) v.findViewById(R.id.tvReportDate);
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_report, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_report_list, parent, false);
         vh = new OriginalViewHolder(v);
         return vh;
     }
@@ -62,13 +62,14 @@ public class AdminReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (holder instanceof OriginalViewHolder) {
             OriginalViewHolder view = (OriginalViewHolder) holder;
 
-            Report report = reportList.get(position);
-            view.name.setText(report.getReportTitle());
-            view.lyt_parent.setOnClickListener(new View.OnClickListener() {
+            final Report report = reportList.get(position);
+            view.tvReportTitle.setText(report.getReportTitle());
+            view.tvReportDate.setText(DateFormat.getDateTimeInstance().format(report.getTimestampCreatedLong()));
+            view.cvReportItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mOnItemClickListener != null) {
-                        mOnItemClickListener.onItemClick(view, reportList.get(position), position);
+                        mOnItemClickListener.onItemClick(view, report, position);
                     }
                 }
             });

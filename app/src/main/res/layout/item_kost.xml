@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lyt_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/splash_icon_" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvKostName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="KostName"
+            android:textColor="@color/black"
+            android:textSize="@dimen/primary_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/kostTypeIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_woman" />
+
+            <TextView
+                android:id="@+id/tvKostType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Woman"
+                android:textColor="@color/white"
+                android:textSize="@dimen/secondary_text_size" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/spacing_middle"
+                android:text="/" />
+
+            <TextView
+                android:id="@+id/tvKostLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/spacing_middle"
+                android:text="Denpasar"
+                android:textSize="@dimen/secondary_text_size" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvRoomTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0"
+            android:background="@drawable/bg_rounded_corner_blue"
+            android:text="10 Room"
+            android:textColor="#fff"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

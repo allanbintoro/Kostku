@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp"
-    tools:context=".DataKost">
+    tools:context=".ActivityUser.DataKost">
 
     <ImageView
         android:src="@drawable/ic_home"

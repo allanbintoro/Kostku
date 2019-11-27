@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ActivityAdminKost.AdminReportDetail">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="#fff" />
+
+    <ScrollView
+        android:id="@+id/sv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fff">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Report Title:"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvReportTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ReportTitle"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvReportDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="24/04/2019" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Boarding Tenants"
+                        android:textColor="@color/blue_800" />
+
+                    <TextView
+                        android:id="@+id/tvTenantName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Erico"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvRoomNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Room 1" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="tvTenantPhone" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/txt123"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Admin"
+                        android:textColor="@color/green_800" />
+
+                    <TextView
+                        android:id="@+id/tvAdminName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Allan"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:id="@+id/linearCallAdmin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvAdminPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="081999265567" />
+
+                        <ImageView
+                            android:id="@+id/im_direction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Report Detail"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvReportDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lorep Ipsujm dolor" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Note"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tv_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnComplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:text="Complete"
+        android:textColor="@android:color/white" />
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLoading"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#80797979"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="auto">-->
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/progressBar"-->
+<!--            style="?android:attr/progressBarStyle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_gravity="center" />-->
+<!--    </LinearLayout>-->
+
+</RelativeLayout>

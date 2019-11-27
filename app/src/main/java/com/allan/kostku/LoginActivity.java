@@ -1,12 +1,14 @@
 package com.allan.kostku;
 
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -14,51 +16,53 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.allan.kostku.Activity.AdminDashboard;
+import com.allan.kostku.ActivityAdminKost.AdminDashboard;
+import com.allan.kostku.ActivityUser.MainActivity;
+import com.allan.kostku.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class LoginActivity extends AppCompatActivity {
     private EditText mEmail, mPassword;
     // defining views
-    private Button mLogin, mRegister;
+
+    private Button mLogin;
     // firebase auth object
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mAuth = FirebaseAuth.getInstance();
+
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
-                    if (user.getEmail().equals("allan@gmail.com")) {
-                        Intent intent = new Intent(LoginActivity.this, AdminDashboard.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                    ResourceManager.logUser(LoginActivity.this);
                 }
             }
         };
 
-
         // initialize view
-        mEmail = (EditText) findViewById(R.id.email);
-        mPassword = (EditText) findViewById(R.id.password);
-        mLogin = (Button) findViewById(R.id.login);
-        progressBar = (ProgressBar)findViewById(R.id.progressBarLogin);
+        mEmail = (EditText) findViewById(R.id.userEmail);
+        mPassword = (EditText) findViewById(R.id.userPassword);
+        mLogin = (Button) findViewById(R.id.btnLogin);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarLogin);
 
 
         mLogin.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                getUser();
                                 Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                             } else {
@@ -82,15 +87,20 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
+
                     if (TextUtils.isEmpty(email) && password.isEmpty()) {
                         Toast.makeText(LoginActivity.this, "Please Insert Email and Password", Toast.LENGTH_SHORT).show();
-                    } else if(email.isEmpty()) {
+                        progressBar.setVisibility(View.GONE);
+                    } else if (email.isEmpty()) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this, "Please Insert Email", Toast.LENGTH_SHORT).show();
                         mEmail.requestFocus();
-                    } else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this, "Please Enter A Valid Email", Toast.LENGTH_SHORT).show();
                         mEmail.requestFocus();
                     } else if (password.isEmpty()) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this, "Please Insert Password", Toast.LENGTH_SHORT).show();
                         mPassword.requestFocus();
                     }
@@ -101,11 +111,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    private void getUser(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        DocumentReference userRef = db.collection("User").document(uid);
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()){
+                    ResourceManager.saveLocalUser(documentSnapshot.toObject(User.class), LoginActivity.this);
+                }
+            }
+        });
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(firebaseAuthListener);
     }
+
 
     @Override
     protected void onStop() {

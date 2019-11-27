@@ -5,14 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Splash"
-    android:id="@+id/splash_screen">
+    android:id="@+id/splash_screen"
+    android:background="@color/colorPrimary">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/kostku2" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/spacing_xxlarge">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:layout_width="@dimen/splash_icon_size"
+            android:layout_height="@dimen/splash_icon_size"
+            android:layout_margin="@dimen/spacing_mlarge"
+            android:src="@drawable/splash_icon_" />
+
+        <TextView
+            android:layout_width="@dimen/text_desc_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Manage your Boarding House in one application"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_margin="@dimen/spacing_mxlarge" />
 </RelativeLayout>

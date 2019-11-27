@@ -13,21 +13,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.AdminDashboard"></activity>
-        <activity android:name=".Activity.AdminReport" />
-        <activity android:name=".Activity.AdminMain" />
-        <activity android:name=".ReportData" />
-        <activity android:name=".UserProfile" />
-        <activity android:name=".FeedbackDialog" />
-        <activity android:name=".ChangePassword" />
-        <activity android:name=".Me" />
-        <activity android:name=".ListReport" />
-        <activity android:name=".ReportDialog" />
-        <activity android:name=".DataKost" />
-        <activity android:name=".Payment" />
-        <activity android:name=".HistoryPayment" />
+        <activity android:name=".ActivityMaster.MasterNewRoom"></activity>
+        <activity android:name=".ActivityMaster.MasterTenantList" />
+        <activity android:name=".ActivityMaster.MasterRoomDetail" />
+        <activity android:name=".ActivityMaster.MasterKostDetail" />
+        <activity
+            android:name=".ActivityMaster.MasterNewKost"
+            android:parentActivityName=".ActivityMaster.MasterKost" />
+        <activity
+            android:name=".ActivityMaster.MasterKost"
+            android:parentActivityName=".ActivityMaster.MasterDashboard" />
+        <activity android:name=".ActivityAdminKost.AdminNewRoom" />
+        <activity
+            android:name=".ActivityAdminKost.AdminNewTenant"
+            android:parentActivityName=".ActivityAdminKost.AdminTenant" />
+        <activity
+            android:name=".ActivityAdminKost.AdminTenant"
+            android:parentActivityName=".ActivityAdminKost.AdminDashboard" />
+        <activity
+            android:name=".ActivityAdminKost.AdminRoom"
+            android:parentActivityName=".ActivityAdminKost.AdminDashboard" />
+        <activity
+            android:name=".ActivityAdminKost.AdminReportDetail"
+            android:parentActivityName=".ActivityAdminKost.AdminReport" />
+        <activity android:name=".ActivityAdminKost.AdminDashboard" />
+        <activity
+            android:name=".ActivityAdminKost.AdminReport"
+            android:parentActivityName=".ActivityAdminKost.AdminDashboard" />
+        <activity android:name=".ActivityMaster.MasterDashboard" />
+        <activity android:name=".ActivityUser.ReportDataUser" />
+        <activity android:name=".ActivityUser.UserProfile" />
+        <activity android:name=".ActivityUser.FeedbackDialog" />
+        <activity android:name=".ActivityUser.ChangePassword" />
+        <activity android:name=".ActivityUser.Me" />
+        <activity android:name=".ActivityUser.ListReport" />
+        <activity android:name=".ActivityUser.ReportDialog" />
+        <activity android:name=".ActivityUser.Payment" />
+        <activity android:name=".ActivityUser.HistoryPayment" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ActivityUser.MainActivity" />
         <activity
             android:name=".Splash"
             android:label="@string/app_name"
