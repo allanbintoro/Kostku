@@ -1,249 +1,246 @@
 package com.allan.kostku.ActivityMaster;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import android.app.Activity;
-import android.content.Context;
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allan.kostku.Model.Image;
-import com.allan.kostku.R;
-import com.balysv.materialripple.MaterialRippleLayout;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.allan.kostku.Adapter.SliderAdapter;
+import com.allan.kostku.Model.Room;
+import com.allan.kostku.R;
+import com.allan.kostku.ResourceManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
+
+import java.text.DateFormat;
 
 public class MasterRoomDetail extends AppCompatActivity {
 
-    private View parent_view;
-    private ViewPager viewPager;
-    private LinearLayout layout_dots;
-    private AdapterImageSlider adapterImageSlider;
-    private Runnable runnable = null;
-    private Handler handler = new Handler();
-
-
-    private static int[] array_image_place = {
-            R.drawable.ic_gojek,
-            R.drawable.ic_indosat,
-            R.drawable.ic_alfamart,
-            R.drawable.ic_alfamidi,
-            R.drawable.ic_gopay,
-    };
-
-    private static String[] array_title_place = {
-            "Dui fringilla ornare finibus, orci odio",
-            "Mauris sagittis non elit quis fermentum",
-            "Mauris ultricies augue sit amet est sollicitudin",
-            "Suspendisse ornare est ac auctor pulvinar",
-            "Vivamus laoreet aliquam ipsum eget pretium",
-    };
-
-    private static String[] array_brief_place = {
-            "Foggy Hill",
-            "The Backpacker",
-            "River Forest",
-            "Mist Mountain",
-            "Side Park",
-    };
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference kostRef = db.collection("Kost");
+    SliderAdapter sliderAdapter;
+    SliderView sliderView;
+    Room room;
+    ImageView imgAc, imgFan, imgTv, imgBathroom, imgBed;
+    TextView tvRoomName, tvRoomStatus, tvDateIn, tvRoomTenant, tvRoomDesc, tvRoomWide, tvDueDate, tvRoomPrice;
+    Button btnEditRoom, btnDeleteRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_room_detail);
-
+        room = (Room) getIntent().getExtras().getSerializable(ResourceManager.PARAM_INTENT_DATA);
+        sliderView = findViewById(R.id.imgSlider);
         initToolbar();
-        initComponent();
+        initSlider();
+        initView();
     }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Room-Detail");
+        getSupportActionBar().setTitle("Room Detail");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void initComponent() {
-        layout_dots = (LinearLayout) findViewById(R.id.layout_dots);
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        adapterImageSlider = new AdapterImageSlider(this, new ArrayList<com.allan.kostku.Model.Image>());
+    private void initView() {
+        //RoomFacilities
+        imgAc = (ImageView) findViewById(R.id.imgAcStatus);
+        imgFan = (ImageView) findViewById(R.id.imgFanStatus);
+        imgTv = (ImageView) findViewById(R.id.imgTvStatus);
+        imgBathroom = (ImageView) findViewById(R.id.imgBathroomStatus);
+        imgBed = (ImageView) findViewById(R.id.imgBedStatus);
 
-        final List<com.allan.kostku.Model.Image> items = new ArrayList<>();
-        for (int i = 0; i < array_image_place.length; i++) {
-            com.allan.kostku.Model.Image obj = new com.allan.kostku.Model.Image();
-            obj.image = array_image_place[i];
-            obj.imageDrw = getResources().getDrawable(obj.image);
-            obj.name = array_title_place[i];
-            obj.brief = array_brief_place[i];
-            items.add(obj);
+        if (!room.getRoomFacilities().isAc()) {
+            Glide.with(this).load(R.drawable.ic_wrong)
+                    .apply(new RequestOptions().override(100, 100)).into(imgAc);
+        }
+        if (!room.getRoomFacilities().isBed()) {
+            Glide.with(this).load(R.drawable.ic_wrong)
+                    .apply(new RequestOptions().override(100, 100)).into(imgFan);
+        }
+        if (!room.getRoomFacilities().isTv()) {
+            Glide.with(this).load(R.drawable.ic_wrong)
+                    .apply(new RequestOptions().override(100, 100)).into(imgTv);
+        }
+        if (!room.getRoomFacilities().isBathroom()) {
+            Glide.with(this).load(R.drawable.ic_wrong)
+                    .apply(new RequestOptions().override(100, 100)).into(imgBathroom);
+        }
+        if (!room.getRoomFacilities().isBed()) {
+            Glide.with(this).load(R.drawable.ic_wrong)
+                    .apply(new RequestOptions().override(100, 100)).into(imgBed);
         }
 
-        adapterImageSlider.setItems(items);
-        viewPager.setAdapter(adapterImageSlider);
+        //Room Detail
+        tvRoomName = (TextView) findViewById(R.id.tvRoomName);
+        tvRoomName.setText(room.getRoomName());
+        tvRoomDesc = (TextView) findViewById(R.id.tvRoomDescription);
+        tvRoomDesc.setText(room.getRoomDesc());
+        tvRoomWide = (TextView) findViewById(R.id.tvRoomWide);
+        tvRoomWide.setText(room.getRoomWide());
+        tvRoomTenant = (TextView) findViewById(R.id.tvRoomTenant);
+        tvDateIn = (TextView) findViewById(R.id.tvDateIn);
+        tvDueDate = (TextView) findViewById(R.id.tvDueDate);
+        if (room.getUserId() != null) {
+            tvRoomTenant.setText(ResourceManager.getUserByUID(ResourceManager.USERS, room.getUserId()));
+            tvDateIn.setText("Date In: " + DateFormat.getDateInstance(DateFormat.SHORT).format(room.getDateIn()));
+            tvDueDate.setTextColor(Color.RED);
+            tvDueDate.setText("Due Date: " + DateFormat.getDateInstance(DateFormat.SHORT).format(room.getDueDate()));
+        } else if (room.getUserId() == null) {
+            tvRoomTenant.setVisibility(View.GONE);
+            tvDateIn.setVisibility(View.GONE);
+            tvDueDate.setVisibility(View.GONE);
+        }
 
-        // displaying selected image first
-        viewPager.setCurrentItem(0);
-        addBottomDots(layout_dots, adapterImageSlider.getCount(), 0);
-        ((TextView) findViewById(R.id.title)).setText(items.get(0).name);
-        ((TextView) findViewById(R.id.brief)).setText(items.get(0).brief);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int pos, float positionOffset, int positionOffsetPixels) {
-            }
+        tvRoomStatus = (TextView) findViewById(R.id.tvRoomStatus);
+        if (room.isRoomStatus()) {
+            tvRoomStatus.setText("Available");
+        } else if (!room.isRoomStatus()) {
+            tvRoomStatus.setText("Unavailable");
+        }
+        tvRoomPrice = (TextView) findViewById(R.id.tvRoomPrice);
+        tvRoomPrice.setText(ResourceManager.currencyFormatter(Double.valueOf(room.getRoomPrice())));
 
+        btnEditRoom = (Button) findViewById(R.id.btnEditRoom);
+        btnEditRoom.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPageSelected(int pos) {
-                ((TextView) findViewById(R.id.title)).setText(items.get(pos).name);
-                ((TextView) findViewById(R.id.brief)).setText(items.get(pos).brief);
-                addBottomDots(layout_dots, adapterImageSlider.getCount(), pos);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onClick(View v) {
+                Intent intent = new Intent(MasterRoomDetail.this, MasterEditRoom.class);
+                intent.putExtra(ResourceManager.PARAM_INTENT_DATA, room);
+                startActivityForResult(intent, 2);
             }
         });
 
-        startAutoSlider(adapterImageSlider.getCount());
-    }
-
-    private void addBottomDots(LinearLayout layout_dots, int size, int current) {
-        ImageView[] dots = new ImageView[size];
-
-        layout_dots.removeAllViews();
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new ImageView(this);
-            int width_height = 15;
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(width_height, width_height));
-            params.setMargins(10, 10, 10, 10);
-            dots[i].setLayoutParams(params);
-            dots[i].setImageResource(R.drawable.shape_circle_outline);
-            layout_dots.addView(dots[i]);
-        }
-
-        if (dots.length > 0) {
-            dots[current].setImageResource(R.drawable.shape_circle);
-        }
-    }
-
-    private void startAutoSlider(final int count) {
-        runnable = new Runnable() {
+        btnDeleteRoom = (Button) findViewById(R.id.btnDeleteRoom);
+        btnDeleteRoom.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                int pos = viewPager.getCurrentItem();
-                pos = pos + 1;
-                if (pos >= count) pos = 0;
-                viewPager.setCurrentItem(pos);
-                handler.postDelayed(runnable, 3000);
+            public void onClick(View v) {
+                showDeleteDialog();
             }
-        };
-        handler.postDelayed(runnable, 3000);
+        });
     }
 
-
-
-    private static class AdapterImageSlider extends PagerAdapter {
-
-        private Activity act;
-        private List<com.allan.kostku.Model.Image> items;
-
-        private AdapterImageSlider.OnItemClickListener onItemClickListener;
-
-        private interface OnItemClickListener {
-            void onItemClick(View view, Image obj);
-        }
-
-        public void setOnItemClickListener(AdapterImageSlider.OnItemClickListener onItemClickListener) {
-            this.onItemClickListener = onItemClickListener;
-        }
-
-        // constructor
-        private AdapterImageSlider(Activity activity, List<com.allan.kostku.Model.Image> items) {
-            this.act = activity;
-            this.items = items;
-        }
-
-        @Override
-        public int getCount() {
-            return this.items.size();
-        }
-
-        public com.allan.kostku.Model.Image getItem(int pos) {
-            return items.get(pos);
-        }
-
-        public void setItems(List<com.allan.kostku.Model.Image> items) {
-            this.items = items;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == ((RelativeLayout) object);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            final com.allan.kostku.Model.Image o = items.get(position);
-            LayoutInflater inflater = (LayoutInflater) act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = inflater.inflate(R.layout.item_slider_image, container, false);
-
-            ImageView image = (ImageView) v.findViewById(R.id.image);
-            MaterialRippleLayout lyt_parent = (MaterialRippleLayout) v.findViewById(R.id.lyt_parent);
-            displayImageOriginal(act, image, o.image);
-            lyt_parent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(v, o);
-                    }
-                }
-            });
-
-            ((ViewPager) container).addView(v);
-
-            return v;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager) container).removeView((RelativeLayout) object);
-
-        }
-
+    private void initSlider() {
+        sliderAdapter = new SliderAdapter(this, room.getRoomImage(), room.getBathroomImage2());
+        sliderView.setSliderAdapter(sliderAdapter);
+        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.WHITE);
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
     }
 
     @Override
-    public void onDestroy() {
-        if (runnable != null) handler.removeCallbacks(runnable);
-        super.onDestroy();
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
-
-    public static void displayImageOriginal(Context ctx, ImageView img, @DrawableRes int drawable) {
-        try {
-            Glide.with(ctx).load(drawable)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(img);
-        } catch (Exception e) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (null != data) {
+            if (requestCode == 2) {
+                String roomName = data.getStringExtra("roomName");
+                String roomDesc = data.getStringExtra("roomDesc");
+                String roomWide = data.getStringExtra("roomWide");
+                String roomPrice = data.getStringExtra("roomPrice");
+                Boolean ac = data.getBooleanExtra("ac", false);
+                Boolean fan = data.getBooleanExtra("fan", false);
+                Boolean tv = data.getBooleanExtra("tv", false);
+                Boolean bathroom = data.getBooleanExtra("bathroom", false);
+                Boolean bed = data.getBooleanExtra("bed", false);
+                tvRoomName.setText(roomName);
+                tvRoomDesc.setText(roomDesc);
+                tvRoomWide.setText(roomWide);
+                tvRoomPrice.setText(roomPrice);
+                if (!ac) {
+                    Glide.with(this).load(R.drawable.ic_wrong)
+                            .apply(new RequestOptions().override(100, 100)).into(imgAc);
+                }
+                if (ac) {
+                    Glide.with(this).load(R.drawable.ic_check)
+                            .apply(new RequestOptions().override(100, 100)).into(imgAc);
+                }
+                if (!fan) {
+                    Glide.with(this).load(R.drawable.ic_wrong)
+                            .apply(new RequestOptions().override(100, 100)).into(imgFan);
+                }
+                if (fan) {
+                    Glide.with(this).load(R.drawable.ic_check)
+                            .apply(new RequestOptions().override(100, 100)).into(imgFan);
+                }
+                if (!tv) {
+                    Glide.with(this).load(R.drawable.ic_wrong)
+                            .apply(new RequestOptions().override(100, 100)).into(imgTv);
+                }
+                if (tv) {
+                    Glide.with(this).load(R.drawable.ic_check)
+                            .apply(new RequestOptions().override(100, 100)).into(imgTv);
+                }
+                if (!bathroom) {
+                    Glide.with(this).load(R.drawable.ic_wrong)
+                            .apply(new RequestOptions().override(100, 100)).into(imgBathroom);
+                }
+                if (bathroom) {
+                    Glide.with(this).load(R.drawable.ic_check)
+                            .apply(new RequestOptions().override(100, 100)).into(imgBathroom);
+                }
+                if (!bed) {
+                    Glide.with(this).load(R.drawable.ic_wrong)
+                            .apply(new RequestOptions().override(100, 100)).into(imgBed);
+                }
+                if (bed) {
+                    Glide.with(this).load(R.drawable.ic_check)
+                            .apply(new RequestOptions().override(100, 100)).into(imgBed);
+                }
+            }
         }
+    }
+
+    private void showDeleteDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_delete);
+        dialog.setCancelable(true);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        ((Button) dialog.findViewById(R.id.btn_confirm)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                kostRef.document(room.getKostId()).collection("Room").document(room.getRoomId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MasterRoomDetail.this, "Success Delete Room", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
     }
 
 }

@@ -8,15 +8,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.allan.kostku.Model.Kost;
-import com.allan.kostku.Model.Report;
 import com.allan.kostku.R;
 import com.allan.kostku.ResourceManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class KostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
 
-    public void refreshItem(List<Kost> newItems){
+    public void refreshItem(List<Kost> newItems) {
         kostList = newItems;
         notifyDataSetChanged();
     }
@@ -48,16 +47,17 @@ public class KostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout linearLayout;
         public TextView tvKostName, tvKostLocation, tvKostType, tvRoomTotal;
-        private ImageView ivKostType;
+        private ImageView imgKost, imgKostType;
 
         public OriginalViewHolder(View v) {
             super(v);
             linearLayout = (LinearLayout) v.findViewById(R.id.lyt_parent);
             tvKostName = (TextView) v.findViewById(R.id.tvKostName);
-            tvKostType = (TextView)v.findViewById(R.id.tvKostType);
+            tvKostType = (TextView) v.findViewById(R.id.tvKostType);
             tvKostLocation = (TextView) v.findViewById(R.id.tvKostLocation);
             tvRoomTotal = (TextView) v.findViewById(R.id.tvRoomTotal);
-            ivKostType = (ImageView)v.findViewById(R.id.kostTypeIcon);
+            imgKostType = (ImageView) v.findViewById(R.id.kostTypeIcon);
+            imgKost = (ImageView) v.findViewById(R.id.imgKost);
         }
     }
 
@@ -79,21 +79,27 @@ public class KostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             view.tvKostName.setText(kost.getKostName());
             view.tvKostLocation.setText(kost.getKostLocation());
             view.tvRoomTotal.setText(ResourceManager.getRoomByKostId
-                    (ResourceManager.ROOMS,kost.getKostId()).size()+" Rooms");
-            if (kost.getKostType().equals("Man")){
+                    (ResourceManager.ROOMS, kost.getKostId()).size() + " Rooms");
+            if (kost.getKostType().equals("Man")) {
                 view.tvKostType.setText(kost.getKostType());
-                view.ivKostType.setImageResource(R.drawable.ic_boy);
+                view.imgKostType.setImageResource(R.drawable.ic_boy);
                 view.tvKostType.setBackgroundResource(R.drawable.bg_rounded_corner_blue);
             }
-            if(kost.getKostType().equals("Woman")){
+            if (kost.getKostType().equals("Woman")) {
                 view.tvKostType.setText(kost.getKostType());
-                view.ivKostType.setImageResource(R.drawable.ic_woman);
+                view.imgKostType.setImageResource(R.drawable.ic_woman);
                 view.tvKostType.setBackgroundResource(R.drawable.bg_rounded_corner_pink);
-            }
-            else{
+            } else {
                 view.tvKostType.setText(kost.getKostType());
-                view.ivKostType.setImageResource(R.drawable.ic_mix);
+                view.imgKostType.setImageResource(R.drawable.ic_mix);
                 view.tvKostType.setBackgroundResource(R.drawable.bg_rounded_corner_green);
+            }
+            if (kost.getKostImage() != null) {
+                Glide.with(ctx)
+                        .load(kost.getKostImage())
+                        .apply(new RequestOptions()
+                                .override(100, 100))
+                        .into(view.imgKost);
             }
             view.linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

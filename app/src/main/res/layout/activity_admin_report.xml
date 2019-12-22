@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActivityAdminKost.AdminReport">
@@ -15,24 +16,38 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="#fff"/>
+        app:titleTextColor="#fff" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvReportList"
+    <LinearLayout
+        android:id="@+id/linearDatePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@id/toolbar"
+        android:orientation="vertical">
 
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/nav"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginBottom="0dp"-->
-<!--        android:background="@color/colorPrimary"-->
-<!--        app:itemIconTint="@drawable/state_bnve"-->
-<!--        app:itemTextColor="@drawable/state_bnve"-->
-<!--        app:menu="@menu/bottomnavigation_admin" />-->
+        <Button
+            android:id="@+id/btnMutasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mutasi Rekening" />
+    </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTransactionList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearDatePicker" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_add" />
 
 </RelativeLayout>

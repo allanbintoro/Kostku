@@ -1,46 +1,40 @@
 package com.allan.kostku.ActivityAdminKost;
 
-import androidx.annotation.NonNull;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
-import com.allan.kostku.Adapter.AdminTenantAdapter;
+import com.allan.kostku.Adapter.UserAdapter;
 import com.allan.kostku.Model.User;
 import com.allan.kostku.R;
+import com.allan.kostku.ResourceManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class AdminTenant extends AppCompatActivity {
-    FirebaseDatabase firebaseDatabase;
-    FirebaseAuth firebaseAuth;
-    private DatabaseReference userRef;
-    private ArrayList<User> userList;
-    RecyclerView rvUserList;
+    private RecyclerView rvUserList;
+    private UserAdapter userAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_tenant);
+        setContentView(R.layout.activity_master_tenant_list);
         initToolbar();
-        //Init Firebase Ref
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        initView();
+        initRcv();
+        FloatingActionButton fabAddUser = (FloatingActionButton) findViewById(R.id.fabAddUser);
+        fabAddUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminTenant.this, AdminNewTenant.class));
+            }
+        });
     }
 
     private void initToolbar() {
@@ -50,55 +44,34 @@ public class AdminTenant extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void initView(){
-        // Init Recycler View
+    private void initRcv() {
         rvUserList = findViewById(R.id.rvUserList);
+
         rvUserList.setHasFixedSize(true);
         rvUserList.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<String> kostLists = ResourceManager.getKostList(ResourceManager.KOSTS, ResourceManager.LOGGED_USER.getUserId());
+        ArrayList<String> userUidList = ResourceManager.getUsersListByUid(ResourceManager.ROOMS, kostLists);
+        ArrayList<User> userList = ResourceManager.getUserByUIDRoom(ResourceManager.USERS, userUidList);
+        userAdapter = new UserAdapter(AdminTenant.this, userList);
+        rvUserList.setAdapter(userAdapter);
 
-        FloatingActionButton fabAdd = (FloatingActionButton)findViewById(R.id.fabAddUser);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
+        userAdapter.refreshItem(userList);
+        userAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AdminTenant.this, AdminNewTenant.class));
-            }
-        });
-    }
-
-    private void loadUserInformation() {
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userList = new ArrayList<>();
-                userList.clear();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    userList.add(data.getValue(User.class));
-                }
-                AdminTenantAdapter adminTenantAdapter = new AdminTenantAdapter(AdminTenant.this, userList);
-                //Notify if the data has changed
-                adminTenantAdapter.notifyDataSetChanged();
-                rvUserList.setAdapter(adminTenantAdapter);
-                adminTenantAdapter.setOnItemClickListener(new AdminTenantAdapter.OnItemClickListener(){
-
-                    @Override
-                    public void onItemClick(View view, User obj, int position) {
-                        Intent intent = new Intent(AdminTenant.this, AdminReportDetail.class);
-//                        intent.putExtra("REPORT_DATA", obj);
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(AdminTenant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onItemClick(View view, User obj, int position) {
+//                Intent intent = new Intent(MasterTenantList.this, Test.class);
+//                intent.putExtra(ResourceManager.PARAM_INTENT_DATA, obj);
+//                startActivity(intent);
             }
         });
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        loadUserInformation();
+    protected void onResume() {
+        super.onResume();
+        ArrayList<String> kostLists = ResourceManager.getKostList(ResourceManager.KOSTS, ResourceManager.LOGGED_USER.getUserId());
+        ArrayList<String> userUidList = ResourceManager.getUsersListByUid(ResourceManager.ROOMS, kostLists);
+        ArrayList<User> userList = ResourceManager.getUserByUIDRoom(ResourceManager.USERS, userUidList);
+        userAdapter.refreshItem(userList);
     }
 }

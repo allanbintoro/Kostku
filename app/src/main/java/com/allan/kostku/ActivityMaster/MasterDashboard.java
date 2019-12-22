@@ -2,30 +2,17 @@ package com.allan.kostku.ActivityMaster;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
-import com.allan.kostku.ActivityAdminKost.AdminDashboard;
-import com.allan.kostku.ActivityAdminKost.AdminReport;
-import com.allan.kostku.ActivityAdminKost.AdminRoom;
-import com.allan.kostku.ActivityAdminKost.AdminTenant;
-import com.allan.kostku.ActivityUser.MainActivity;
-import com.allan.kostku.Model.User;
 import com.allan.kostku.R;
 import com.allan.kostku.ResourceManager;
-
-import java.util.ArrayList;
 
 public class MasterDashboard extends AppCompatActivity {
 
@@ -54,8 +41,6 @@ public class MasterDashboard extends AppCompatActivity {
             }
         });
 
-
-
         // List Boarding Tenant (User) Activity
         CardView cvTenant = (CardView)findViewById(R.id.cvTenant);
         cvTenant.setOnClickListener(new View.OnClickListener() {
@@ -65,20 +50,8 @@ public class MasterDashboard extends AppCompatActivity {
                 startActivity(intentTenant);
             }
         });
-        //List Report Activity
-//        TextView tvReportTotal = (TextView)findViewById(R.id.tvReportTotal);
-////        tvReportTotal.setText();
-//        CardView cvReport = (CardView)findViewById(R.id.cvReport);
-//        cvReport.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intentReport = new Intent(MasterDashboard.this, AdminReport.class);
-//                startActivity(intentReport);
-//            }
-//        });
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,5 +71,10 @@ public class MasterDashboard extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
 

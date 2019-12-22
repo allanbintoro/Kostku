@@ -39,121 +39,364 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_xxlarge" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="2dp">
+                android:layout_margin="16dp"
+                app:cardCornerRadius="6dp">
 
-                <RelativeLayout
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imgSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/pager"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@color/grey_20"
-                        android:foreground="@color/overlay_dark_10" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/bg_gradient"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/spacing_mlarge"
-                        android:paddingLeft="@dimen/spacing_large"
-                        android:paddingRight="@dimen/spacing_large"
-                        android:paddingTop="@dimen/spacing_mxlarge">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Suspendisse ornare est ac auctor pulvinar"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textColor="@android:color/white" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_middle"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="@dimen/spacing_large"
-                                    android:layout_height="@dimen/spacing_large"
-                                    android:layout_marginEnd="@dimen/spacing_medium"
-                                    android:layout_marginRight="@dimen/spacing_medium"
-                                    android:tint="@color/grey_10"
-                                    app:srcCompat="@drawable/ic_location" />
-
-                                <TextView
-                                    android:id="@+id/brief"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="The Backpacker"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                    android:textColor="@color/grey_10" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layout_dots"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:gravity="center"
-                            android:orientation="horizontal" />
-
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
+                    android:layout_height="300dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="false"
+                    app:sliderCircularHandlerEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderStartAutoCycle="false" />
 
             </androidx.cardview.widget.CardView>
 
             <View
+                android:id="@+id/view2"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/spacing_large" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/spacing_large"
-                android:orientation="vertical">
+                android:layout_marginLeft="@dimen/spacing_large"
+                android:layout_marginRight="@dimen/spacing_large"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_medium">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvRoomName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Description"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/grey_90" />
+                    android:text="Room Name : Xiangmen"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/grey_80" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_middle"
-                    android:lineSpacingExtra="@dimen/spacing_small"
-                    android:text="@string/very_long_lorem_ipsum"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="@color/grey_60" />
+                    android:background="@android:color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:gravity="center_vertical"
+                            android:text="Room Facilities"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            android:textColor="@color/grey_80" />
+
+                        <LinearLayout
+                            android:id="@+id/linearAc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/spacing_xmlarge"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/spacing_xmlarge"
+                                android:background="@android:color/transparent"
+                                app:srcCompat="@drawable/ic_air_conditioner" />
+
+                            <View
+                                android:layout_width="@dimen/spacing_middle"
+                                android:layout_height="0dp" />
+
+                            <TextView
+                                android:id="@+id/roomFacilitiesAc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:minHeight="@dimen/spacing_xmlarge"
+                                android:text="Air Conditioner (AC)"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+
+                            <ImageView
+                                android:id="@+id/imgAcStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="8dp"
+                                app:srcCompat="@drawable/ic_check" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearFan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/spacing_xmlarge"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/spacing_xmlarge"
+                                android:background="@android:color/transparent"
+                                app:srcCompat="@drawable/ic_fan" />
+
+                            <View
+                                android:layout_width="@dimen/spacing_middle"
+                                android:layout_height="0dp" />
+
+                            <TextView
+                                android:id="@+id/kostFacilitiesPark"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:minHeight="@dimen/spacing_xmlarge"
+                                android:text="Fan"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+
+                            <ImageView
+                                android:id="@+id/imgFanStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="8dp"
+                                app:srcCompat="@drawable/ic_check" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/spacing_xmlarge"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/spacing_xmlarge"
+                                android:background="@android:color/transparent"
+                                app:srcCompat="@drawable/ic_television" />
+
+                            <View
+                                android:layout_width="@dimen/spacing_middle"
+                                android:layout_height="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:minHeight="@dimen/spacing_xmlarge"
+                                android:text="TV"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+
+                            <ImageView
+                                android:id="@+id/imgTvStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="8dp"
+                                app:srcCompat="@drawable/ic_check" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearBathroom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/spacing_xmlarge"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/spacing_xmlarge"
+                                android:background="@android:color/transparent"
+                                app:srcCompat="@drawable/ic_shower_head" />
+
+                            <View
+                                android:layout_width="@dimen/spacing_middle"
+                                android:layout_height="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:minHeight="@dimen/spacing_xmlarge"
+                                android:text="Bathroom"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+
+                            <ImageView
+                                android:id="@+id/imgBathroomStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="8dp"
+                                app:srcCompat="@drawable/ic_check" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearBed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/spacing_xmlarge"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/spacing_xmlarge"
+                                android:background="@android:color/transparent"
+                                app:srcCompat="@drawable/ic_bed" />
+
+                            <View
+                                android:layout_width="@dimen/spacing_middle"
+                                android:layout_height="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:minHeight="@dimen/spacing_xmlarge"
+                                android:text="Bed"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+
+                            <ImageView
+                                android:id="@+id/imgBedStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="8dp"
+                                app:srcCompat="@drawable/ic_check" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:gravity="center_vertical"
+                            android:text="Room Description"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            android:textColor="@color/grey_80" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvRoomTenant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="Room Tenant: -"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+
+                            <TextView
+                                android:id="@+id/tvDateIn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical|end"
+                                android:text="Date In : -"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvDueDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="Tanggal Jatuh Tempo"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_40" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvRoomWide"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_room_wodth"
+                                android:gravity="center_vertical"
+                                android:text="2x2"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40"
+                                app:drawableTint="@color/colorPrimary" />
+
+                            <TextView
+                                android:id="@+id/tvRoomStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/spacing_medium"
+                                android:gravity="center_vertical"
+                                android:text="Available"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+
+                            <TextView
+                                android:id="@+id/tvRoomPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/spacing_medium"
+                                android:gravity="center_vertical"
+                                android:text="Rp. 2.000.000"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_40" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvRoomDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="Kamar yang nyaman untuk digunakan tempat istirahat"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_40" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
 
             </LinearLayout>
@@ -161,6 +404,24 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="@dimen/spacing_middle" />
+
+            <Button
+                android:id="@+id/btnEditRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@drawable/ic_edit"
+                android:text="Edit Room" />
+
+            <Button
+                android:id="@+id/btnDeleteRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@drawable/ic_delete_black"
+                android:text="Delete Room" />
 
 
         </LinearLayout>

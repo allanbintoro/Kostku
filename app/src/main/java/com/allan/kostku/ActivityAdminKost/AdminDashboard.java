@@ -1,17 +1,15 @@
 package com.allan.kostku.ActivityAdminKost;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import com.allan.kostku.R;
 import com.allan.kostku.ResourceManager;
@@ -30,37 +28,25 @@ public class AdminDashboard extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Admin-Dashboard");
-        Log.e( "TESTTT: ",ResourceManager.LOGGED_USER.getUserEmail()+"" );
     }
 
-    private void initData(){
-        // List Room Activity
-        CardView cvRoom = (CardView)findViewById(R.id.cvRoom);
+    private void initData() {
+        // List Boarding House Activity
+        CardView cvRoom = (CardView) findViewById(R.id.cvRoom);
         cvRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentRoom = new Intent(AdminDashboard.this, AdminRoom.class);
-                startActivity(intentRoom);
+                Intent intent = new Intent(AdminDashboard.this, AdminKost.class);
+                startActivity(intent);
             }
         });
         // List Boarding Tenant (User) Activity
-        CardView cvTenant = (CardView)findViewById(R.id.cvTenant);
+        CardView cvTenant = (CardView) findViewById(R.id.cvTenant);
         cvTenant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentTenant = new Intent(AdminDashboard.this, AdminTenant.class);
-                startActivity(intentTenant);
-            }
-        });
-        //List Report Activity
-        TextView tvReportTotal = (TextView)findViewById(R.id.tvReportTotal);
-//        tvReportTotal.setText();
-        CardView cvReport = (CardView)findViewById(R.id.cvReport);
-        cvReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentReport = new Intent(AdminDashboard.this, AdminReport.class);
-                startActivity(intentReport);
+                Intent intent = new Intent(AdminDashboard.this, AdminTenant.class);
+                startActivity(intent);
             }
         });
 
@@ -82,6 +68,12 @@ public class AdminDashboard extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
 

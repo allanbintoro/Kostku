@@ -25,13 +25,19 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 
 public class ResourceManager {
     public static User LOGGED_USER = null;
+    public static Room MYROOM = null;
     public static ArrayList<Kost> KOSTS;//Master
     public static ArrayList<Kost> KOSTSUID;//Admin
     public static ArrayList<Room> ROOMS;//Master
@@ -51,22 +57,56 @@ public class ResourceManager {
 
         Gson gson = new Gson();
         String json = mPref.getString("loggedUser", "");
-        Log.e("json: ", json + "");
 
         User user = gson.fromJson(json, User.class);
 
         ResourceManager.LOGGED_USER = user;
-        Log.e("logUser: ", user + "");
 
         if (LOGGED_USER == null) return;
         if (LOGGED_USER.getUserType().equalsIgnoreCase("1")) {
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(activity, new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String newToken = instanceIdResult.getToken();
+                    Log.e("newToken", newToken);
+                }
+            });
+            String topic = "Master";
+            FirebaseMessaging.getInstance().subscribeToTopic(topic);
             Intent intent = new Intent(activity, MasterDashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); // clears all previous activities task
+            activity.finish();
             activity.startActivity(intent);
         } else if (LOGGED_USER.getUserType().equalsIgnoreCase("2")) {
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(activity, new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String newToken = instanceIdResult.getToken();
+                    Log.e("newToken", newToken);
+                }
+            });
+            String topic = "Owner";
+            FirebaseMessaging.getInstance().subscribeToTopic(topic);
             Intent intent = new Intent(activity, AdminDashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); // clears all previous activities task
+            activity.finish();
             activity.startActivity(intent);
         } else if (LOGGED_USER.getUserType().equalsIgnoreCase("3")) {
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(activity, new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String newToken = instanceIdResult.getToken();
+                    Log.e("newToken", newToken);
+                }
+            });
+            String topic = ResourceManager.LOGGED_USER.getUserId();
+            FirebaseMessaging.getInstance().subscribeToTopic(topic);
             Intent intent = new Intent(activity, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); // clears all previous activities task
+            activity.finish();
             activity.startActivity(intent);
         }
 
@@ -74,11 +114,11 @@ public class ResourceManager {
             @Override
             public void run() {
                 //TODO your background code
+                loadRoom(activity);
                 loadKost(activity);
                 loadUser(activity);
                 loadUserList(activity);
                 loadKostByUid(activity);
-                loadRoom(activity);
             }
         });
     }
@@ -87,23 +127,31 @@ public class ResourceManager {
         mPref = activity.getSharedPreferences("userPref", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = gson.toJson(user);
-        Log.e("saveLocalUser: ", json);
         mPref.edit().putString("loggedUser", json).commit();
         mPref.edit().apply();
         String test = mPref.getString("loggedUser", "");
-
-        Log.e("saveLocalUser2: ", test + "a");
 
         ResourceManager.logUser(activity);
     }
 
     public static void logOutUser(Context context) {
+        if (LOGGED_USER.getUserType().equalsIgnoreCase("1")) {
+            String topic = "Master";
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
+        } else if (LOGGED_USER.getUserType().equalsIgnoreCase("2")) {
+            String topic = "Admin";
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
+        } else if (LOGGED_USER.getUserType().equalsIgnoreCase("3")) {
+            String topic = ResourceManager.LOGGED_USER.getUserId();
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
+        }
         FirebaseAuth.getInstance().signOut();
         mPref = context.getSharedPreferences("userPref", Context.MODE_PRIVATE);
         mPref.edit().clear().apply();
         mPref.edit().commit();
 
         Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -147,6 +195,7 @@ public class ResourceManager {
 
                         isLoadKost = true;
                         sendBroadcast(activity);
+//                        goToMainActivity(activity);
 
                     }
                 });
@@ -158,6 +207,7 @@ public class ResourceManager {
 
         db.collection("Kost")
                 .whereEqualTo("kostOwnerId", LOGGED_USER.getUserId())
+                .orderBy("kostName", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -235,11 +285,10 @@ public class ResourceManager {
                                     break;
                             }
                         }
-                        Log.e( "onEvent: ",ResourceManager.ROOMS+"" );
+                        Log.e("onEvent: ", ResourceManager.ROOMS + "");
 
                         isLoadRoom = true;
                         sendBroadcast(activity);
-
                     }
                 });
     }
@@ -282,17 +331,15 @@ public class ResourceManager {
                                     break;
                             }
                         }
-
                         isLoadUser = true;
                         sendBroadcast(activity);
-
                     }
                 });
     }
 
     public static void sendBroadcast(Activity activity) {
 
-        if (isLoadKost) {
+        if (isLoadKost && isLoadRoom && isLoadUser) {
             Intent intent = new Intent("loadComplete");
             Log.e("Send Broadcast", "Done");
             LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
@@ -322,15 +369,36 @@ public class ResourceManager {
         sendBroadcast(activity);
     }
 
-
-    public static ArrayList<Room> getRoomByKostId(ArrayList<Room> rooms, String kostId){
+    public static ArrayList<Room> getRoomByKostId(ArrayList<Room> rooms, String kostId) {
         ArrayList<Room> kostRoom = new ArrayList<>();
-        for (int i=0; i<rooms.size(); i++){
-            if (rooms.get(i).getKostId().equals(kostId)){
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getKostId().equals(kostId)) {
                 kostRoom.add(rooms.get(i));
             }
         }
         return kostRoom;
+    }
+
+    public static Boolean checkRoomName(ArrayList<Room> rooms, String kostId, String roomName) {
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getRoomName().equals(roomName)) {
+                if (rooms.get(i).getKostId().equals(kostId)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static Boolean updateRoomNamesameId(ArrayList<Room> rooms, String roomId, String roomName) {
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getRoomName().equals(roomName)) {
+                if (rooms.get(i).getRoomId().equals(roomId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static String getUserByName(ArrayList<User> users, String userName) {
@@ -341,6 +409,88 @@ public class ResourceManager {
         }
         return null;
     }
+    public static String getUserNameById(ArrayList<User> users, String uId) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUserId().equals(uId)) {
+                return users.get(i).getUserName();
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<String> getKostName(ArrayList<Kost> kosts) {
+        ArrayList<String> kostName = new ArrayList<>();
+        for (int i = 0; i < kosts.size(); i++) {
+            kostName.add(kosts.get(i).getKostName());
+        }
+        return kostName;
+    }
+
+    public static ArrayList<String> getKostNameById(ArrayList<Kost> kosts, String kostOwnerId) {
+        ArrayList<String> kostName = new ArrayList<>();
+        for (int i = 0; i < kosts.size(); i++) {
+            if (kostOwnerId.equals(kosts.get(i).getKostOwnerId())) {
+                kostName.add(kosts.get(i).getKostName());
+            }
+        }
+        return kostName;
+    }
+
+    public static ArrayList<String> getRoomList(ArrayList<Room> rooms, String kostId) {
+        ArrayList<String> roomList = new ArrayList<>();
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getKostId().equals(kostId)) {
+                roomList.add(rooms.get(i).getRoomName());
+            }
+        }
+        return roomList;
+    }
+
+    //Collect All Room In Kost
+    public static ArrayList<String> getRoomByKostName(ArrayList<Room> rooms, String kostId) {
+        ArrayList<String> roomList = new ArrayList<>();
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getKostId().equals(kostId)) {
+                if (rooms.get(i).isRoomStatus()) {
+                    roomList.add(rooms.get(i).getRoomName());
+                }
+            }
+        }
+        return roomList;
+    }
+
+    public static String getRoomByName(ArrayList<Room> rooms, String kostId, String roomName) {
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getKostId().equals(kostId)) {
+                if (rooms.get(i).getRoomName().equals(roomName)) {
+                    return rooms.get(i).getRoomId();
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Room getRoomData(ArrayList<Room> rooms, String roomId) {
+        Room a = new Room();
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getRoomId().equals(roomId)) {
+
+                return a = rooms.get(i);
+
+            }
+        }
+        return null;
+    }
+
+    public static String getKostIdByKostName(ArrayList<Kost> kosts, String kostName) {
+        for (int i = 0; i < kosts.size(); i++) {
+            if (kosts.get(i).getKostName().equals(kostName)) {
+                return kosts.get(i).getKostId();
+            }
+        }
+        return null;
+    }
+
     public static String getUserByUID(ArrayList<User> users, String uid) {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUserId().equals(uid)) {
@@ -350,6 +500,71 @@ public class ResourceManager {
         return null;
     }
 
+    public static String getKostNameByUid(ArrayList<Kost> kosts, String kostId) {
+        for (int i = 0; i < kosts.size(); i++) {
+            if (kostId.equals(kosts.get(i).getKostId())) {
+                return kosts.get(i).getKostName();
+            }
+        }
+        return null;
+    }
+
+    public static Room getUserRoom(ArrayList<Room> rooms, String uid) {
+        Room a = new Room();
+        for (int i = 0; i < rooms.size(); i++) {
+            if (uid.equals(rooms.get(i).getUserId())) {
+                return a = rooms.get(i);
+            }
+        }
+        return null;
+    }
+    public static Room getUserRoomByRoomId(ArrayList<Room> rooms, String roomId) {
+        Room a = new Room();
+        for (int i = 0; i < rooms.size(); i++) {
+            if (roomId.equals(rooms.get(i).getRoomId())) {
+                return a = rooms.get(i);
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<String> getKostList(ArrayList<Kost> kosts, String ownerId) {
+        ArrayList<String> kostList = new ArrayList<>();
+        for (int i = 0; i < kosts.size(); i++) {
+            if (kosts.get(i).getKostOwnerId().equals(ownerId)) {
+                kostList.add(kosts.get(i).getKostId());
+            }
+        }
+        return kostList;
+    }
+
+    //Get All UserID from RoomList
+    public static ArrayList<String> getUsersListByUid(ArrayList<Room> rooms, ArrayList<String> kostId) {
+        ArrayList<String> userList = new ArrayList<>();
+        for (int i = 0; i < rooms.size(); i++) {
+            for (int j = 0; j < kostId.size(); j++) {
+                if (rooms.get(i).getKostId().equals(kostId.get(j))) {
+                    userList.add(rooms.get(i).getUserId());
+                }
+            }
+        }
+        return userList;
+    }
+
+    //User Object From getUserListByUid
+    public static ArrayList<User> getUserByUIDRoom(ArrayList<User> users, ArrayList<String> userId) {
+        ArrayList<User> userList = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            for (int j = 0; j < userId.size(); j++) {
+                if (users.get(i).getUserId().equals(userId.get(j))) {
+                    userList.add(users.get(i));
+                }
+            }
+        }
+        return userList;
+    }
+
+
     private static int getKostIndexByUID(ArrayList<Kost> kosts, String uid) {
         for (int i = 0; i < kosts.size(); i++) {
             if (kosts.get(i).getKostId().equals(uid)) {
@@ -358,6 +573,7 @@ public class ResourceManager {
         }
         return -1;
     }
+
     private static int getRoomIndexByUID(ArrayList<Room> rooms, String uid) {
         for (int i = 0; i < rooms.size(); i++) {
             if (rooms.get(i).getRoomId().equals(uid)) {
@@ -375,5 +591,17 @@ public class ResourceManager {
         }
         return -1;
     }
+
+    public static String currencyFormatter(double val) {
+        NumberFormat kursRupiah = (NumberFormat) NumberFormat.getInstance();
+        kursRupiah.setMaximumFractionDigits(0);
+
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setGroupingSeparator('.');
+
+        return "Rp " + kursRupiah.format(val).replaceAll(",", ".");
+    }
+    
 
 }

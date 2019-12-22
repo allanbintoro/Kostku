@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.allan.kostku.Model.Room;
 import com.allan.kostku.R;
+import com.allan.kostku.ResourceManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +48,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout cvRoom;
         public TextView tvRoomName, tvRoomPrice, tvRoomWide, tvRoomStatus;
+        public ImageView imgRoom;
 
         public OriginalViewHolder(View v) {
             super(v);
@@ -52,6 +57,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tvRoomStatus = (TextView)v.findViewById(R.id.tvRoomStatus);
             tvRoomPrice = (TextView)v.findViewById(R.id.tvRoomPrice);
             tvRoomWide = (TextView)v.findViewById(R.id.tvRoomWide);
+            imgRoom = (ImageView)v.findViewById(R.id.imgRoom);
         }
     }
 
@@ -63,7 +69,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof OriginalViewHolder) {
@@ -79,7 +84,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 view.tvRoomStatus.setText("Unavailable");
                 view.tvRoomStatus.setBackgroundResource(R.drawable.bg_rounded_corner_pink);
             }
-
+            view.tvRoomWide.setText(room.getRoomWide());
+            view.tvRoomPrice.setText(ResourceManager.currencyFormatter(Double.valueOf(room.getRoomPrice())));
+            if (room.getRoomImage()!=null){
+                Glide.with(ctx)
+                        .load(room.getRoomImage())
+                        .apply(new RequestOptions()
+                                .override(100, 100))
+                        .into(view.imgRoom);
+            }
             view.cvRoom.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -1,10 +1,16 @@
 package com.allan.kostku.Model;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class Room implements Serializable {
-    private String roomId, roomName, roomDesc, roomPrice, roomWide, kostId, userId;
+    private String roomId, roomName, roomDesc, roomPrice, roomWide, kostId, userId, bathroomImage2, roomImage;
     private boolean roomStatus;
+    private RoomFacilities roomFacilities;
+//    private @ServerTimestamp Date dateIn, dueDate;
+    private Long dateIn, dueDate;
 
     public Room() {
     }
@@ -85,6 +91,46 @@ public class Room implements Serializable {
         this.roomStatus = roomStatus;
     }
 
+    public String getBathroomImage2() {
+        return bathroomImage2;
+    }
+
+    public void setBathroomImage2(String bathroomImage2) {
+        this.bathroomImage2 = bathroomImage2;
+    }
+
+    public String getRoomImage() {
+        return roomImage;
+    }
+
+    public void setRoomImage(String roomImage) {
+        this.roomImage = roomImage;
+    }
+
+    public RoomFacilities getRoomFacilities() {
+        return roomFacilities;
+    }
+
+    public void setRoomFacilities(RoomFacilities roomFacilities) {
+        this.roomFacilities = roomFacilities;
+    }
+
+    public Long getDateIn() {
+        return dateIn;
+    }
+
+    public void setDateIn(Long dateIn) {
+        this.dateIn = dateIn;
+    }
+
+    public Long getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Long dueDate) {
+        this.dueDate = dueDate;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
@@ -95,7 +141,12 @@ public class Room implements Serializable {
                 ", roomWide='" + roomWide + '\'' +
                 ", kostId='" + kostId + '\'' +
                 ", userId='" + userId + '\'' +
+                ", bathroomImage='" + bathroomImage2 + '\'' +
+                ", roomImage='" + roomImage + '\'' +
+                ", dateIn='" + dateIn + '\'' +
+                ", dueDate='" + dueDate + '\'' +
                 ", roomStatus=" + roomStatus +
+                ", roomFacilities=" + roomFacilities +
                 '}';
     }
 }

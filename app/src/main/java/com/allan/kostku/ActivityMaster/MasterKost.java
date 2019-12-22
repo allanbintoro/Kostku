@@ -50,9 +50,6 @@ public class MasterKost extends AppCompatActivity {
         kostAdapter = new KostAdapter(MasterKost.this, ResourceManager.KOSTS);
         rvKostList.setAdapter(kostAdapter);
 
-        kostAdapter.refreshItem(ResourceManager.KOSTS);
-        kostAdapter.notifyDataSetChanged();
-
         kostAdapter.setOnItemClickListener(new KostAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Kost obj, int position) {
@@ -64,7 +61,8 @@ public class MasterKost extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        kostAdapter.refreshItem(ResourceManager.KOSTS);
     }
 }

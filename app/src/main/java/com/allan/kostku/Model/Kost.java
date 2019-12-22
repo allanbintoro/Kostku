@@ -3,18 +3,21 @@ package com.allan.kostku.Model;
 import java.io.Serializable;
 
 public class Kost implements Serializable {
-    private String kostId, kostLocation, kostName, kostDesc, kostType, kostOwnerId;
+    private String kostId, kostLocation, kostName, kostDesc, kostType, kostOwnerId, kostImage, parkImage;
+
+    private KostFacilities kostFacilities;
 
     public Kost() {
     }
 
-    public Kost(String kostId, String kostLocation, String kostName, String kostDesc, String kostType, String kostOwnerId) {
+    public Kost(String kostId, String kostLocation, String kostName, String kostDesc, String kostType, String kostOwnerId, KostFacilities kostFacilities) {
         this.kostId = kostId;
         this.kostLocation = kostLocation;
         this.kostName = kostName;
         this.kostDesc = kostDesc;
         this.kostType = kostType;
         this.kostOwnerId = kostOwnerId;
+        this.kostFacilities = kostFacilities;
     }
 
     public String getKostId() {
@@ -65,6 +68,30 @@ public class Kost implements Serializable {
         this.kostOwnerId = kostOwnerId;
     }
 
+    public KostFacilities getKostFacilities() {
+        return kostFacilities;
+    }
+
+    public void setKostFacilities(KostFacilities kostFacilities) {
+        this.kostFacilities = kostFacilities;
+    }
+
+    public String getKostImage() {
+        return kostImage;
+    }
+
+    public void setKostImage(String kostImage) {
+        this.kostImage = kostImage;
+    }
+
+    public String getParkImage() {
+        return parkImage;
+    }
+
+    public void setParkImage(String parkImage) {
+        this.parkImage = parkImage;
+    }
+
     @Override
     public String toString() {
         return "Kost{" +
@@ -74,6 +101,14 @@ public class Kost implements Serializable {
                 ", kostDesc='" + kostDesc + '\'' +
                 ", kostType='" + kostType + '\'' +
                 ", kostOwnerId='" + kostOwnerId + '\'' +
+                ", kostImage='" + kostImage + '\'' +
+                ", parkImage='" + parkImage + '\'' +
+                ", kostFacilities=" + kostFacilities +
                 '}';
     }
 }
+
+
+
+
+

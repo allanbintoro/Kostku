@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
+//    flavorDimensions"mode"
     defaultConfig {
         applicationId "com.allan.kostku"
         minSdkVersion 19
@@ -11,6 +12,22 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
+
+//    productFlavors {
+//        sandbox {
+//            applicationId = "com.allan.kostku"
+//            resValue "string", "app_name", "Kostku Sandbox"
+//            buildConfigField "string", "MERCHANT_BASE_URL", "\"http://kostku.herokuapp.com/index.php/\""
+//            buildConfigField "string", "MERCHANT_CLIENT_KEY", "\"SB-Mid-client-bfA7pEzaHB0V1GuA/\""
+//        }
+////        production{
+////            aplicationId = "com.allan.kostku.sandbox"
+////            resValue "string", "app_name", "Kostku Sandbox"
+////            buildConfigField "string", "MERCHANT_BASE_URL", "\"http://kostku.herokuapp.com/index.php/\""
+////            buildConfigField "string", "MERCHANT_CLIENT_KEY", "\"SB-Mid-client-bfA7pEzaHB0V1GuA/\""
+////        }
+//    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -33,17 +50,20 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'             // image loader
+    implementation 'com.github.bumptech.glide:glide:4.9.0'             // image loader
     implementation 'com.balysv:material-ripple:1.0.2'                  // ripple effect
+    implementation 'com.github.smarteist:autoimageslider:1.3.2'
+    implementation 'com.github.VenkatramanRajagopalan:DateRangePicker:2.1' // Date Picker
+
 
     //Expandable Recycler View
     implementation 'com.thoughtbot:expandablerecyclerview:1.3'
 
     //Firebase
     implementation 'com.google.firebase:firebase-core:17.2.1'
-    implementation 'com.google.firebase:firebase-firestore:21.2.1'
-    implementation 'com.google.firebase:firebase-messaging:20.0.0'
-    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.firebase:firebase-firestore:21.3.0'
+    implementation 'com.google.firebase:firebase-messaging:20.0.1'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-database:19.2.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.google.firebase:firebase-functions:19.0.1'
@@ -51,7 +71,7 @@ dependencies {
 //    implementation 'com.google.firebase:firebase-admin:6.8.0'
 
     // For using the Midtrans Sandbox
-    implementation 'com.midtrans:uikit:1.22.0-SANDBOX' // change the number to the latest version
+    implementation 'com.midtrans:uikit:1.23.1-SANDBOX' // change the number to the latest version
 
 }
 apply plugin: 'com.google.gms.google-services'

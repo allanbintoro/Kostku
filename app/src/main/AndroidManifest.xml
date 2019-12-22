@@ -4,26 +4,90 @@
     package="com.allan.kostku">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_kost"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_kost_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ActivityMaster.MasterNewRoom"></activity>
-        <activity android:name=".ActivityMaster.MasterTenantList" />
-        <activity android:name=".ActivityMaster.MasterRoomDetail" />
-        <activity android:name=".ActivityMaster.MasterKostDetail" />
+        <activity android:name=".ActivityUser.UserPaymentHistoryActivity"
+            android:parentActivityName=".ActivityUser.MainActivity"/>
+        <activity
+            android:name=".ActivityUser.UserRoomActivity"
+            android:parentActivityName=".ActivityUser.MainActivity" />
+        <activity
+            android:name=".ActivityAdminKost.AdminTransactionDetail"
+            android:parentActivityName=".ActivityAdminKost.AdminKostDetail" />
+        <activity
+            android:name=".ActivityAdminKost.AdminNewTransaction"
+            android:parentActivityName=".ActivityAdminKost.AdminKostDetail" />
+        <activity
+            android:name=".ActivityAdminKost.AdminEditAnnouncement"
+            android:parentActivityName=".ActivityAdminKost.AdminAnnouncementDetail" />
+        <activity
+            android:name=".ActivityAdminKost.AdminAnnouncementDetail"
+            android:parentActivityName=".ActivityAdminKost.AdminKostDetail" />
+        <activity
+            android:name=".ActivityAdminKost.AdminNewAnnouncement"
+            android:parentActivityName=".ActivityAdminKost.AdminKostDetail" />
+        <activity
+            android:name=".ActivityAdminKost.AdminAnnouncementList"
+            android:parentActivityName=".ActivityAdminKost.AdminDashboard" />
+        <activity android:name=".ActivityAdminKost.AdminFeedbackList" />
+        <activity
+            android:name=".ActivityAdminKost.AdminNewKost"
+            android:parentActivityName=".ActivityAdminKost.AdminKost" />
+        <activity
+            android:name=".ActivityAdminKost.AdminEditKost"
+            android:parentActivityName=".ActivityAdminKost.AdminKostDetail" />
+        <activity
+            android:name=".ActivityAdminKost.AdminEditRoom"
+            android:parentActivityName=".ActivityAdminKost.AdminRoomDetail" />
+        <activity
+            android:name=".ActivityAdminKost.AdminRoomDetail"
+            android:parentActivityName=".ActivityAdminKost.AdminKostDetail" />
+        <activity
+            android:name=".ActivityAdminKost.AdminKostDetail"
+            android:launchMode="singleTask"
+            android:parentActivityName=".ActivityAdminKost.AdminKost" />
+        <activity
+            android:name=".ActivityMaster.MasterEditRoom"
+            android:parentActivityName=".ActivityMaster.MasterKostDetail" />
+        <activity
+            android:name=".ActivityMaster.MasterEditKost"
+            android:parentActivityName=".ActivityMaster.MasterKostDetail" />
+        <activity
+            android:name=".ActivityMaster.MasterNewTenant"
+            android:parentActivityName=".ActivityMaster.MasterTenantList" />
+        <activity
+            android:name=".ActivityMaster.MasterNewRoom"
+            android:launchMode="singleTask"
+            android:parentActivityName=".ActivityMaster.MasterKostDetail" />
+        <activity
+            android:name=".ActivityMaster.MasterTenantList"
+            android:parentActivityName=".ActivityMaster.MasterDashboard" />
+        <activity
+            android:name=".ActivityMaster.MasterRoomDetail"
+            android:parentActivityName=".ActivityMaster.MasterKostDetail" />
+        <activity
+            android:name=".ActivityMaster.MasterKostDetail"
+            android:launchMode="singleTask"
+            android:parentActivityName=".ActivityMaster.MasterKost" />
         <activity
             android:name=".ActivityMaster.MasterNewKost"
             android:parentActivityName=".ActivityMaster.MasterKost" />
         <activity
             android:name=".ActivityMaster.MasterKost"
             android:parentActivityName=".ActivityMaster.MasterDashboard" />
-        <activity android:name=".ActivityAdminKost.AdminNewRoom" />
+        <activity
+            android:name=".ActivityAdminKost.AdminNewRoom"
+            android:parentActivityName=".ActivityAdminKost.AdminKostDetail" />
         <activity
             android:name=".ActivityAdminKost.AdminNewTenant"
             android:parentActivityName=".ActivityAdminKost.AdminTenant" />
@@ -31,7 +95,7 @@
             android:name=".ActivityAdminKost.AdminTenant"
             android:parentActivityName=".ActivityAdminKost.AdminDashboard" />
         <activity
-            android:name=".ActivityAdminKost.AdminRoom"
+            android:name=".ActivityAdminKost.AdminKost"
             android:parentActivityName=".ActivityAdminKost.AdminDashboard" />
         <activity
             android:name=".ActivityAdminKost.AdminReportDetail"

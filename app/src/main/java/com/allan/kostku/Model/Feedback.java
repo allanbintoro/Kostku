@@ -3,17 +3,11 @@ package com.allan.kostku.Model;
 import java.io.Serializable;
 
 public class Feedback implements Serializable {
-    private String feedbackId, feedbackDesc, feedbackScore;
-    private User user;
+    private String feedbackId, feedbackDesc, kostId, roomId, userId;
+    private float feedbackRating;
+    private Long feedbackDate;
 
     public Feedback() {
-    }
-
-    public Feedback(String feedbackId, String feedbackDesc, String feedbackScore, User user) {
-        this.feedbackId = feedbackId;
-        this.feedbackDesc = feedbackDesc;
-        this.feedbackScore = feedbackScore;
-        this.user = user;
     }
 
     public String getFeedbackId() {
@@ -32,19 +26,56 @@ public class Feedback implements Serializable {
         this.feedbackDesc = feedbackDesc;
     }
 
-    public String getFeedbackScore() {
-        return feedbackScore;
+    public String getKostId() {
+        return kostId;
     }
 
-    public void setFeedbackScore(String feedbackScore) {
-        this.feedbackScore = feedbackScore;
+    public void setKostId(String kostId) {
+        this.kostId = kostId;
     }
 
-    public User getUser() {
-        return user;
+    public String getRoomId() {
+        return roomId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public float getFeedbackRating() {
+        return feedbackRating;
+    }
+
+    public void setFeedbackRating(float feedbackRating) {
+        this.feedbackRating = feedbackRating;
+    }
+
+    public Long getFeedbackDate() {
+        return feedbackDate;
+    }
+
+    public void setFeedbackDate(Long feedbackDate) {
+        this.feedbackDate = feedbackDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "feedbackId='" + feedbackId + '\'' +
+                ", feedbackDesc='" + feedbackDesc + '\'' +
+                ", kostId='" + kostId + '\'' +
+                ", roomId='" + roomId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", feedbackRating=" + feedbackRating +
+                ", feedbackDate=" + feedbackDate +
+                '}';
     }
 }

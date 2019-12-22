@@ -3,7 +3,7 @@ package com.allan.kostku.Model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    String userId, userName, userKtp, userEmail, userPassword, userType;
+    String userId, userName, userKtp, userEmail, userPassword, userType, roomId, kostId;
 
     public User() {
     }
@@ -63,6 +63,14 @@ public class User implements Serializable {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public void setKostId(String kostId) {
+        this.kostId = kostId;
     }
 
     @Override

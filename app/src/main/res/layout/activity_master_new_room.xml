@@ -48,6 +48,39 @@
                     android:orientation="vertical">
 
 
+                    <ImageView
+                        android:id="@+id/imageRoom"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+                    <Button
+                        android:id="@+id/btnImageRoom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Kamar" />
+
+                    <ImageView
+                        android:id="@+id/imageBathroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:visibility="gone"
+                        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+                    <Button
+                        android:id="@+id/btnImageBathroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Kamar Mandi"
+                        android:visibility="gone" />
+
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -107,6 +140,62 @@
                             android:singleLine="true" />
 
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Room Facilities" />
+
+                    <Switch
+                        android:id="@+id/facilitiesKost1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_air_conditioner"
+                        android:drawablePadding="10dp"
+                        android:text="Air Conditioner (AC)"
+                        android:textOff="false"
+                        android:textOn="true" />
+
+                    <Switch
+                        android:id="@+id/facilitiesKost2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_fan"
+                        android:drawablePadding="10dp"
+                        android:text="Fan"
+                        android:textOff="false"
+                        android:textOn="true" />
+
+                    <Switch
+                        android:id="@+id/facilitiesKost3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_television"
+                        android:drawablePadding="10dp"
+                        android:text="TV"
+                        android:textOff="false"
+                        android:textOn="true" />
+
+                    <Switch
+                        android:id="@+id/facilitiesKost4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_shower_head"
+                        android:drawablePadding="10dp"
+                        android:text="Bathroom"
+                        android:textOff="false"
+                        android:textOn="true" />
+
+                    <Switch
+                        android:id="@+id/facilitiesKost5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_bed"
+                        android:drawablePadding="10dp"
+                        android:text="Bed"
+                        android:textOff="false"
+                        android:textOn="true" />
 
                     <Button
                         android:id="@+id/btnAddRoom"

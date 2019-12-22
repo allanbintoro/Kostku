@@ -13,6 +13,7 @@ import com.allan.kostku.Adapter.UserAdapter;
 import com.allan.kostku.Model.User;
 import com.allan.kostku.R;
 import com.allan.kostku.ResourceManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MasterTenantList extends AppCompatActivity {
     private RecyclerView rvUserList;
@@ -24,6 +25,13 @@ public class MasterTenantList extends AppCompatActivity {
         setContentView(R.layout.activity_master_tenant_list);
         initToolbar();
         initRcv();
+        FloatingActionButton fabAddUser = (FloatingActionButton)findViewById(R.id.fabAddUser);
+        fabAddUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MasterTenantList.this, MasterNewTenant.class));
+            }
+        });
     }
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,10 +52,16 @@ public class MasterTenantList extends AppCompatActivity {
         userAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, User obj, int position) {
-                Intent intent = new Intent(MasterTenantList.this, MasterKostDetail.class);
-                intent.putExtra(ResourceManager.PARAM_INTENT_DATA, obj);
-                startActivity(intent);
+//                Intent intent = new Intent(MasterTenantList.this, Test.class);
+//                intent.putExtra(ResourceManager.PARAM_INTENT_DATA, obj);
+//                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userAdapter.refreshItem(ResourceManager.USERS);
     }
 }

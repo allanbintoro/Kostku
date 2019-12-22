@@ -8,7 +8,7 @@
     android:padding="10dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgRoom"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:srcCompat="@drawable/splash_icon_" />
@@ -35,7 +35,8 @@
             <TextView
                 android:id="@+id/tvRoomStatus"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="Empty" />
 
             <TextView
@@ -43,8 +44,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:drawableLeft="@drawable/ic_room_wodth"
+                android:gravity="center"
                 android:text="3X4"
-                android:textSize="@dimen/secondary_text_size" />
+                android:textSize="@dimen/secondary_text_size"
+                app:drawableTint="@color/colorPrimary" />
         </LinearLayout>
 
         <TextView
@@ -52,7 +56,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RP. 1.000.000"
-            android:textSize="@dimen/secondary_text_size" />
+            android:textColor="@color/red_900"
+            android:textSize="@dimen/secondary_text_size"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

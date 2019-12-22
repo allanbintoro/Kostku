@@ -1,47 +1,60 @@
 package com.allan.kostku.ActivityAdminKost;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.Button;
 
-import com.allan.kostku.Adapter.AdminReportAdapter;
-import com.allan.kostku.Model.Report;
+import com.allan.kostku.Adapter.RoomAdapter;
+import com.allan.kostku.Model.Room;
 import com.allan.kostku.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.allan.kostku.ResourceManager;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.twigsntwines.daterangepicker.DatePickerDialog;
+import com.twigsntwines.daterangepicker.DateRangePickedListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
 
 public class AdminReport extends AppCompatActivity {
-    private static final String TAG = "AdminReport";
-    FirebaseDatabase firebaseDatabase;
-    FirebaseAuth firebaseAuth;
     private RecyclerView rvReportList;
-    private DatabaseReference reportRef;
-    private ArrayList<Report> reportList;
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference transRef = db.collection("Transaction");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_report);
         //Init Toolbar
         initToolbar();
-        //Init Firebase Ref
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        reportRef = FirebaseDatabase.getInstance().getReference("Report");
+        Button button = (Button) findViewById(R.id.btnMutasi);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getSupportFragmentManager(); //Initialize fragment manager
+                DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(); // Create datePickerDialog Instance
+                datePickerDialog.show(fragmentManager, "Date Picker"); // Show DatePicker Dialog
+                datePickerDialog.setOnDateRangePickedListener(new DateRangePickedListener() {
+                    @Override
+                    public void OnDateRangePicked(Calendar fromDate, Calendar toDate) {
+                        Log.e("From Date", String.valueOf(fromDate.getTimeInMillis()));
+                        Log.e("To Date", toDate.getTime().toString());
+
+                    }
+                });
+            }
+        });
+
         //Init Recycler View
         initRcv();
     }
@@ -54,47 +67,38 @@ public class AdminReport extends AppCompatActivity {
     }
 
     private void initRcv() {
-        rvReportList = findViewById(R.id.rvReportList);
+        rvReportList = findViewById(R.id.rvTransactionList);
         rvReportList.setHasFixedSize(true);
         rvReportList.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        loadUserInformation();
-    }
-
-    private void loadUserInformation() {
-        reportRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                reportList = new ArrayList<>();
-                reportList.clear();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    reportList.add(data.getValue(Report.class));
-                }
-                //Reverse report data
-                Collections.reverse(reportList);
-                AdminReportAdapter adminReportAdapter = new AdminReportAdapter(AdminReport.this, reportList);
-                //Notify if the data has changed
-                adminReportAdapter.notifyDataSetChanged();
-                rvReportList.setAdapter(adminReportAdapter);
-                adminReportAdapter.setOnItemClickListener(new AdminReportAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, Report obj, int position) {
-                        Intent intent = new Intent(AdminReport.this, AdminReportDetail.class);
-                        intent.putExtra("REPORT_DATA", obj);
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(AdminReport.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    public void loadMutasi(Calendar fromDate, Calendar toDate) {
+//        transRef.whereEqualTo("kostId", kost.getKostId())
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        roomList = new ArrayList<>();
+//                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+//                            Room room = documentSnapshot.toObject(Room.class);
+//                            roomList.add(room);
+//                        }
+//                        roomAdapter = new RoomAdapter(AdminKostDetail.this, roomList);
+//                        rvRoomList.setAdapter(roomAdapter);
+//
+//                        roomAdapter.refreshItem(roomList);
+//
+//                        roomAdapter.setOnItemClickListener(new RoomAdapter.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(View view, Room obj, int position) {
+//                                Intent intent = new Intent(AdminKostDetail.this, AdminRoomDetail.class);
+//                                intent.putExtra(ResourceManager.PARAM_INTENT_DATA, obj);
+//                                startActivity(intent);
+//                            }
+//                        });
+//                    }
+//
+//                });
+//    }
 
 }
